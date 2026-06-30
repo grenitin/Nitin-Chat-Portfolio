@@ -391,11 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text) return null;
         
         if (text.includes("Hey there! I'm Nitin's AI Buddy")) return "assets/audio/welcome.mp3";
-        if (text.includes("you're a recruiter")) return "assets/audio/recruiter.mp3";
-        if (text.includes("As a Hiring Manager")) return "assets/audio/hiring_manager.mp3";
         if (text.includes("Founders usually love Nitin's ability")) return "assets/audio/founder.mp3";
         if (text.includes("If you're a potential client")) return "assets/audio/client.mp3";
-        if (text.includes("I'm here to help you explore Nitin's portfolio")) return "assets/audio/other.mp3";
         if (text.includes("Nitin is a **Design Manager** based out of **Jaipur**")) return "assets/audio/intro.mp3";
         if (text.includes("Here's a quick story of Nitin's journey")) return "assets/audio/experience.mp3";
         if (text.includes("Nitin holds a BSc in Multimedia")) return "assets/audio/education.mp3";

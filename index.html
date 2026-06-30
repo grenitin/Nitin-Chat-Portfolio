@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Nitin Kr. | Chat Buddy</title>
+    <meta name="description" content="Portfolio of Nitin Kr. - Design Leader, Principal Product Architect, and AI Agent builder.">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/images/favicon.svg">
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/design-system.css">
+    <link rel="stylesheet" href="/assets/css/chat.css">
+    <script>
+        // --- High-Fidelity Theme Engine ---
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            } else {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <!-- MS Clarity Tracking Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xe5tc3bkxw");
+    </script>
+</head>
+<body class="dark-mode">
+    <script>
+        // Sync body class with documentElement state
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        });
+    </script>
+    <div class="glass-lines-bg"></div>
+    <div class="light-bubbles">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+        <div class="bubble b4"></div>
+        <div class="bubble b5"></div>
+        <div class="bubble b6"></div>
+        <div class="bubble b7"></div>
+        <div class="bubble b8"></div>
+    </div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+
+    <nav>
+        <div class="ds-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo" style="display: flex; align-items: center;">Nitin Kr<span class="logo-dot">.</span> <span class="logo-subtitle">AI BUDDY</span></div>
+            <div class="nav-right">
+                <div class="nav-actions" style="display: flex; align-items: center; gap: 15px;">
+                    <a href="https://design-lab-zeta.vercel.app/" target="_blank" class="nav-cta-btn">My Website</a>
+                    <button class="theme-toggle ds-icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mode-icon moon-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mode-icon sun-icon" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="chat-container landing-state" id="chat-container">
+            <div id="hero-landing" class="hero-landing">
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/Nitin.png" alt="Nitin Kr" class="hero-img">
+                </div>
+                <h1 class="hero-welcome-text" style="font-family: 'Playfair Display', serif; font-weight: 800; margin-top: 20px; font-size: 2rem; text-align: center; color: var(--text-primary); line-height: 1.2; letter-spacing: -0.01em;">AI-Driven UX - Innovation Leader</h1>
+            </div>
+            <div class="chat-history" id="chat-history">
+                <!-- Chat messages will be injected here by JS -->
+            </div>
+            
+            <div class="chat-input-area" id="chat-input-area">
+                <button id="quick-chat-toggle" class="quick-chat-toggle" aria-label="Toggle Quick Chat">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                </button>
+                <div class="quick-replies">
+                    <span class="quick-chat-label">Quick Chat</span>
+                    <button class="quick-reply-btn">Intro</button>
+                    <button class="quick-reply-btn">Case Studies</button>
+                    <button class="quick-reply-btn">The AI Lab</button>
+                    <button class="quick-reply-btn">Education</button>
+                    <button class="quick-reply-btn">Professional Journey</button>
+                    <button class="quick-reply-btn">UI Design</button>
+                    <div class="sticky-right-actions">
+                        <span class="quick-reply-separator">|</span>
+                        <button class="quick-reply-btn" style="display: flex; align-items: center; justify-content: center;">View Resume</button>
+                    </div>
+                </div>
+                <div id="attachments-container" class="attachments-container"></div>
+                <div class="input-box">
+                    <input type="file" id="file-upload" accept=".pdf,.doc,.docx" style="display: none;">
+                    <button id="attach-btn" class="attach-btn" aria-label="Attach File" title="Attach JD or PDF">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+
+                    <input type="text" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
+                    
+                    <button id="tts-mute-btn" class="tts-mute-btn" aria-label="Toggle Voice" title="Mute/Unmute Assistant">
+                        <!-- Default Unmuted Icon (Volume Up) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-unmuted"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                        <!-- Muted Icon (Volume X) hidden by default -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-muted" style="display: none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                    </button>
+
+                    <button id="voice-btn" class="voice-btn" aria-label="Use Voice" title="Voice Dictation">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                    </button>
+
+
+                    <button id="send-btn" class="send-btn" aria-label="Send Message" title="Send">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- File Warning Modal -->
+    <div id="file-warning-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content ds-card">
+            <h3 class="ds-heading-h3" style="color: #ff4d4f; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                Unsupported File
+            </h3>
+            <p class="ds-body" style="margin-top: 10px;">Please upload only <strong>PDF</strong> or <strong>DOC/DOCX</strong> files. Other formats are not currently supported.</p>
+            <button id="close-warning-btn" class="ds-btn ds-btn-primary" style="margin-top: 20px; width: 100%;">Got it</button>
+        </div>
+    </div>
+
+    <!-- Resume Modal -->
+    <div id="resume-modal" class="modal-overlay" style="display: none; z-index: 1000;">
+        <div class="modal-content ds-card" style="width: 90%; height: 90%; max-width: 1000px; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+            <div class="modal-header" style="padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <h3 class="ds-heading-h3" style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <svg class="mobile-only-header-icon" width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="border-radius: 6px;">
+                        <rect width="100" height="100" rx="28" fill="#FF4B55" />
+                        <path d="M30 24 h22 l20 20 v32 a6 6 0 0 1 -6 6 H30 a6 6 0 0 1 -6 -6 V30 a6 6 0 0 1 6 -6 z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                        <path d="M52 24 v18 h20" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" />
+                        <line x1="38" y1="54" x2="64" y2="54" stroke="white" stroke-width="8" stroke-linecap="round" />
+                        <line x1="38" y1="68" x2="64" y2="68" stroke="white" stroke-width="8" stroke-linecap="round" />
+                        <line x1="38" y1="40" x2="46" y2="40" stroke="white" stroke-width="8" stroke-linecap="round" />
+                    </svg>
+                    Nitin's Resume
+                </h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button id="close-resume-btn" class="ds-icon-btn" aria-label="Close" style="background: rgba(255,255,255,0.1); border-radius: 50%; padding: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2); box-sizing: border-box;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="flex: 1; background: #333; position: relative;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                   <div class="typing-indicator" style="display: flex; gap: 5px;"><span></span><span></span><span></span></div>
+                   <p>Loading PDF...</p>
+                </div>
+                <!-- Delay iframe src setting to prevent slow loading on initial page load -->
+                <iframe id="resume-iframe" data-src="assets/Nitin_Kr_Resume.pdf" width="100%" height="100%" style="border: none; position: relative; z-index: 1;"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Case Study Modal -->
+    <div id="casestudy-modal" class="modal-overlay" style="display: none; z-index: 1000;">
+        <div class="modal-content ds-card" style="width: 95%; height: 95%; max-width: 1400px; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+            <div class="modal-header" style="padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <h3 class="ds-heading-h3" id="casestudy-modal-title" style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">
+                    Case Study
+                </h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a id="casestudy-external-link" href="#" target="_blank" class="ds-icon-btn casestudy-external-link-btn" aria-label="Open in new tab">
+                        <span class="external-link-text">View Website</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    <button id="close-casestudy-btn" class="ds-icon-btn" aria-label="Close" style="background: rgba(255,255,255,0.1); border-radius: 50%; padding: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2); box-sizing: border-box;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="flex: 1; background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+                <div id="casestudy-loader" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2;">
+                   <div class="typing-indicator" style="display: flex; gap: 5px;"><span></span><span></span><span></span></div>
+                   <p>Loading Case Study...</p>
+                </div>
+                <iframe id="casestudy-iframe" src="about:blank" width="100%" height="100%" style="border: none; position: relative; z-index: 1; background: transparent; opacity: 0; transition: opacity 0.3s ease;"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dribbble Modal -->
+    <div id="dribbble-modal" class="modal-overlay" style="display: none; z-index: 1000;">
+        <div class="modal-content ds-card resume-modal-content" style="width: 100%; height: 100%; max-width: 1000px; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+            <div class="modal-header resume-modal-header" style="padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512" fill="#ea4c89"><path d="M256 8C119.252 8 8 119.252 8 256s111.252 248 248 248 248-111.252 248-248S392.748 8 256 8zm163.97 114.366c29.503 36.046 47.369 81.957 47.835 131.955-6.984-1.477-77.018-15.682-147.502-6.818-5.752-14.041-11.181-26.393-18.617-41.614 78.087-31.977 113.812-77.482 118.284-83.523zM396.421 97.87c-3.81 5.427-35.697 48.286-111.021 76.519-34.712-63.776-73.185-116.168-79.04-124.008 67.176-16.193 137.966 1.27 190.061 47.489zm-230.48-33.25c5.585 7.659 43.438 60.116 78.537 122.509-99.087 26.313-186.36 25.934-195.834 25.809C62.38 147.205 106.678 92.573 165.941 64.62zM44.17 256.323c0-2.166.043-4.322.108-6.473 9.268.19 111.92 1.513 217.706-30.146 6.064 11.868 11.857 23.915 17.174 35.949-76.599 21.575-146.194 83.527-152.947 90.733-41.225-24.97-67.625-68.567-82.041-90.063zM256 476.012c-47.518 0-91.802-15.682-127.85-42.342 5.867-6.262 67.925-72.33 140.407-89.877 34.025 89.288 51.523 164.249 53.692 173.844-21.282 8.016-44.407 12.39-66.249 12.39zm121.27-24.103c-2.073-9.155-19.141-82.47-52.551-169.805 60.05-13.882 121.432-8.525 128.431-7.857 1.597 45.412-14.735 87.728-40.421 119.866-10.742-9.458-22.185-23.708-35.459-37.796z"/></svg>
+                    <h3 class="ds-heading-h3 resume-modal-title" style="margin: 0; font-size: 1.2rem;">Nitin's Dribbble</h3>
+                </div>
+                <div class="resume-modal-actions" style="display: flex; gap: 10px; align-items: center;">
+                    <button id="close-dribbble-btn" class="ds-icon-btn" aria-label="Close" style="background: rgba(255,255,255,0.1); border-radius: 50%; padding: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2); box-sizing: border-box;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="flex: 1; background: var(--bg-main); overflow-y: auto; padding: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px;">
+                    <!-- Native Dribbble-style Gallery (12 shots) -->
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27588804/file/original-66a7b413ad0696990cc91db5c934e68a.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27512446/file/original-8b579e37baa9df7ef360946fb4a6520f.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27512363/file/original-6340943683fb1618a6f671af7198da33.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27506867/file/original-ef7f64ef892fa4c24cc4a8e7bde202e2.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27506641/file/original-2810962ff3e798fb8dcdb5de1d605a73.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27506667/file/original-6d54466f01071a97d89ced3b761ec9aa.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27499363/file/original-9263f56bd50fa4370c4a31c8357cf2b3.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/27499250/file/original-93435a3d6bd2780bca6ce772913ba450.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/24715783/file/original-a52d57633d6e88edd806c850146d7691.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/24593162/file/original-a56c911652309dcb97dd3e1bf4bba0fe.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/24593132/file/original-e37f130883a6c16cdf89d5e52bfb308f.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                    <div style="display: block; border-radius: 12px; overflow: hidden; background: var(--bg-card); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <img src="https://cdn.dribbble.com/userupload/24593014/file/original-7a528141ac48b5cf9cefb19d4f282238.png?resize=800x600" alt="Dribbble Shot" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;">
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                    <a href="https://dribbble.com/Nitin_kr" target="_blank" class="ds-btn ds-btn-secondary resume-open-btn" style="height: 44px; padding: 0 25px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; font-size: 16px; white-space: nowrap; border-radius: 25px;">
+                        View all on Dribbble
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512" fill="currentColor"><path d="M256 8C119.252 8 8 119.252 8 256s111.252 248 248 248 248-111.252 248-248S392.748 8 256 8zm163.97 114.366c29.503 36.046 47.369 81.957 47.835 131.955-6.984-1.477-77.018-15.682-147.502-6.818-5.752-14.041-11.181-26.393-18.617-41.614 78.087-31.977 113.812-77.482 118.284-83.523zM396.421 97.87c-3.81 5.427-35.697 48.286-111.021 76.519-34.712-63.776-73.185-116.168-79.04-124.008 67.176-16.193 137.966 1.27 190.061 47.489zm-230.48-33.25c5.585 7.659 43.438 60.116 78.537 122.509-99.087 26.313-186.36 25.934-195.834 25.809C62.38 147.205 106.678 92.573 165.941 64.62zM44.17 256.323c0-2.166.043-4.322.108-6.473 9.268.19 111.92 1.513 217.706-30.146 6.064 11.868 11.857 23.915 17.174 35.949-76.599 21.575-146.194 83.527-152.947 90.733-41.225-24.97-67.625-68.567-82.041-90.063zM256 476.012c-47.518 0-91.802-15.682-127.85-42.342 5.867-6.262 67.925-72.33 140.407-89.877 34.025 89.288 51.523 164.249 53.692 173.844-21.282 8.016-44.407 12.39-66.249 12.39zm121.27-24.103c-2.073-9.155-19.141-82.47-52.551-169.805 60.05-13.882 121.432-8.525 128.431-7.857 1.597 45.412-14.735 87.728-40.421 119.866-10.742-9.458-22.185-23.708-35.459-37.796z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/portfolioData.js?v=9"></script>
+    <script src="assets/js/chatEngine.js?v=9"></script>
+    <script src="assets/js/uiInteractions.js"></script>
+    <script src="assets/js/main.js"></script> <!-- Keep main.js for theme toggle, cursor etc. -->
+</body>
+</html>

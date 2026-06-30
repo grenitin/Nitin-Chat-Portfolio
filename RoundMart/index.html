@@ -1,0 +1,3470 @@
+<!DOCTYPE html>
+<!-- CASE STUDY PARENT TEMPLATE -->
+<!-- Based on Swiggy Daily Case Study -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoundMart: The Future of Trustworthy Local Discovery | UX Case Study</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Poppins:wght@100;300;400;500;600;700&family=Outfit:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/design-system.css">
+    <link rel="stylesheet" href="../assets/css/case_study.css">
+    <script>
+        // --- High-Fidelity Theme Engine ---
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            } else {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <style>
+        /* NUCLEAR FIX FOR WHITE MARGIN AND THEME SYNC */
+        html,
+        body {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow-x: hidden !important;
+            background-color: var(--bg-main) !important;
+            min-height: 100vh !important;
+        }
+
+        .case-study-main .canvas-wrapper {
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            float: none !important;
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
+        }
+
+        .show-mobile-only {
+            display: none;
+        }
+
+        nav {
+            left: 0 !important;
+            right: 0 !important;
+            width: auto !important;
+        }
+
+        .cs-map-container {
+            width: 100%;
+            margin: 0 0 4rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            padding: 5rem 4rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .cs-map-container:hover {
+            border-color: var(--accent-30);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .cs-map-title {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--text-secondary);
+            /* Vibrant Gold/Yellow */
+            margin-bottom: 5rem;
+        }
+
+        .cs-map-canvas {
+            width: 100%;
+            aspect-ratio: 16/9;
+            position: relative;
+            border-left: 2.5px solid var(--border-medium);
+            border-bottom: 2.5px solid var(--border-medium);
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .cs-axis-label {
+            position: absolute;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .axis-y-title {
+            top: 50%;
+            left: -80px;
+            transform: translateY(-50%) rotate(-90deg);
+            letter-spacing: 0.15em;
+        }
+
+        .axis-x-title {
+            bottom: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            letter-spacing: 0.15em;
+        }
+
+        .label-high-y {
+            top: 0;
+            left: -50px;
+            color: var(--text-secondary);
+        }
+
+        .label-med-y {
+            top: 50%;
+            left: -50px;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .label-low-y {
+            bottom: 0;
+            left: -50px;
+            color: var(--text-secondary);
+        }
+
+        .label-high-x {
+            right: 0;
+            bottom: -35px;
+            color: var(--text-secondary);
+        }
+
+        .label-med-x {
+            left: 50%;
+            bottom: -35px;
+            transform: translateX(-50%);
+            color: var(--text-secondary);
+        }
+
+        .label-low-x {
+            left: 0;
+            bottom: -35px;
+            color: var(--text-secondary);
+        }
+
+        .cs-map-point {
+            position: absolute;
+            padding: 1.2rem 1.8rem;
+            border-radius: 16px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-medium);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            transform: translate(-50%, 50%);
+            min-width: 160px;
+        }
+
+        .cs-map-point:hover {
+            transform: translate(-50%, 50%) translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-medium);
+            z-index: 10;
+        }
+
+        .cs-map-point h5 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .cs-map-point p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        /* Positions and Colors to match image */
+        .point-restaurants {
+            border-color: #4285F4;
+            left: 15%;
+            bottom: 80%;
+        }
+
+        .point-restaurants h5 {
+            color: #4285F4;
+        }
+
+        .point-tiffin {
+            border-color: var(--text-secondary);
+            left: 20%;
+            bottom: 35%;
+        }
+
+        .point-tiffin h5 {
+            color: var(--text-secondary);
+        }
+
+        .point-cooking {
+            border-color: #34A853;
+            left: 60%;
+            bottom: 60%;
+        }
+
+        .point-cooking h5 {
+            color: #34A853;
+        }
+
+        .point-delivery {
+            border-color: #EA4335;
+            left: 55%;
+            bottom: 15%;
+        }
+
+        .point-delivery h5 {
+            color: #EA4335;
+        }
+
+        /* Target Zone Rectangle - Restored and Balanced */
+        .cs-target-zone {
+            position: absolute;
+            border: 2px dashed var(--accent);
+            border-radius: 32px;
+            left: 80%;
+            bottom: 85%;
+            transform: translate(-50%, 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            background: rgba(255, 204, 0, 0.03);
+            width: 280px;
+            /* Balanced padding around the 200px box */
+            height: 200px;
+            /* Balanced padding around the 140px box */
+        }
+
+        .cs-map-point.point-solution {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--text-secondary);
+            position: relative;
+            left: auto;
+            bottom: auto;
+            transform: none;
+            padding: 0;
+            /* Removing padding to use flex-centering with fixed dimensions */
+            width: 200px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.4);
+            text-align: center;
+            gap: 0.2rem;
+        }
+
+        .cs-map-point.point-solution h5 {
+            color: #fff;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .cs-map-point.point-solution p {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.2;
+            max-width: 80%;
+        }
+
+        body.dark-mode .cs-map-point.point-solution,
+        body.dark-mode .cs-map-point.point-solution h5,
+        body.dark-mode .cs-map-point.point-solution p {
+            color: #000 !important;
+        }
+
+        /* Dark Mode Chart Background Overrides */
+        body.dark-mode .cs-map-container,
+        body.dark-mode .cs-flow-container,
+        body.dark-mode .cs-pyramid-container,
+        body.dark-mode .cs-persona,
+        body.dark-mode .cs-journey-wrapper,
+        body.dark-mode .cs-ideas-board,
+        body.dark-mode .cs-idea-cluster,
+        body.dark-mode .cs-matrix-container,
+        body.dark-mode .cs-arch-container,
+        body.dark-mode .cs-flow-viewport,
+        body.dark-mode .cs-hifi-container,
+        body.dark-mode .cs-metric-card,
+        body.dark-mode .cs-affinity-cluster,
+        body.dark-mode .cs-empathy-grid,
+        body.dark-mode .cs-metrics-grid {
+            background: rgba(255, 255, 255, 0.03) !important;
+        }
+
+        body.dark-mode .cs-flow-node,
+        body.dark-mode .cs-flow-decision {
+            background: var(--bg-card-heavy) !important;
+            border-color: var(--border-medium) !important;
+        }
+
+        .cs-map-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 6rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Mobile Map View Styles */
+        .cs-map-mobile-view,
+        .cs-map-mobile-view * {
+            box-sizing: border-box !important;
+        }
+
+        .cs-map-mobile-view {
+            display: none;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .cs-map-container {
+                padding: 2.5rem 1.25rem !important;
+                margin: 2rem 0 !important;
+                background: var(--bg-card) !important;
+                backdrop-filter: var(--blur-glass) !important;
+                -webkit-backdrop-filter: var(--blur-glass) !important;
+                border: 1px solid var(--border-medium) !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                border-radius: 24px !important;
+            }
+
+            .cs-map-canvas,
+            .cs-map-title,
+            .cs-map-caption {
+                display: none !important;
+            }
+
+            .cs-map-mobile-view {
+                display: flex;
+            }
+        }
+
+        .cs-map-mobile-header {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 1rem;
+        }
+
+        .cs-map-mobile-solution-card {
+            background: var(--accent-light);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--accent-30);
+            border-radius: 16px;
+            padding: 1.25rem 1rem;
+            position: relative;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2), 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .solution-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .solution-info h2 {
+            color: var(--accent);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            /* Reduced size by ~2px */
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            font-variant: small-caps;
+        }
+
+        .solution-tagline {
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-style: normal;
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin: 0.15rem 0 0;
+            opacity: 0.8;
+        }
+
+        .market-leader-badge {
+            background: var(--accent);
+            color: #000;
+            padding: 0.25rem 0.4rem;
+            border-radius: 4px;
+            font-family: var(--font-ui);
+            font-size: 0.45rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .solution-metrics {
+            display: flex;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .metric-progress {
+            display: flex;
+            gap: 2px;
+        }
+
+        .metric-progress .segment {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .metric-progress .segment.active {
+            background: var(--accent);
+            box-shadow: 0 0 5px rgba(229, 199, 107, 0.4);
+        }
+
+        .metric-value {
+            color: var(--accent);
+            font-family: var(--font-ui);
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-align: right;
+            margin-top: 0.1rem;
+        }
+
+        /* Mobile Slider Styles */
+        .cs-map-mobile-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            padding: 0.5rem 1.25rem 1.5rem;
+            margin: 0 -1.25rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .cs-map-mobile-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Competitor Cards */
+        .cs-map-mobile-competitor-card {
+            background: var(--bg-card);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--border-medium);
+            border-radius: 10px;
+            padding: 0.5rem 0.75rem 0.75rem;
+            /* Top padding reduced to 8px */
+            border-left: 3px solid transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            width: 100%;
+            min-width: 75vw;
+            flex: 0 0 75vw;
+            scroll-snap-align: center;
+        }
+
+        .competitor-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.1rem;
+        }
+
+        .competitor-header h3 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin: 0;
+            white-space: nowrap;
+            line-height: 2px;
+            /* As requested to eliminate space */
+        }
+
+        .competitor-quote {
+            color: var(--text-secondary);
+            font-style: normal;
+            font-size: 0.65rem;
+            margin: 0;
+            text-align: left;
+            opacity: 0.8;
+            line-height: 1.2;
+        }
+
+        .competitor-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem;
+        }
+
+        .comp-metric-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.4rem 0.6rem;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comp-metric-box .label {
+            color: var(--text-secondary);
+            font-size: 0.45rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .comp-metric-box .value {
+            color: var(--text-primary);
+            font-size: 0.7rem;
+            font-weight: 900;
+        }
+
+        /* Specific Card Colors */
+        .cs-map-mobile-competitor-card.restaurants {
+            border-left-color: #4285F4;
+        }
+
+        .cs-map-mobile-competitor-card.restaurants h3 {
+            color: #4285F4;
+        }
+
+        .cs-map-mobile-competitor-card.restaurants .comp-metric-box:first-child .value {
+            color: #4285F4;
+        }
+
+        .cs-map-mobile-competitor-card.cooking {
+            border-left-color: #34A853;
+        }
+
+        .cs-map-mobile-competitor-card.cooking h3 {
+            color: #34A853;
+        }
+
+        .cs-map-mobile-competitor-card.tiffin {
+            border-left-color: var(--accent);
+        }
+
+        .cs-map-mobile-competitor-card.tiffin h3 {
+            color: var(--accent);
+        }
+
+        .cs-map-mobile-competitor-card.delivery {
+            border-left-color: #EA4335;
+        }
+
+        .cs-map-mobile-competitor-card.delivery h3 {
+            color: #EA4335;
+        }
+
+        .cs-map-mobile-caption {
+            text-align: center;
+            font-size: 0.6rem;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0rem;
+            line-height: 1.4;
+        }
+
+        /* Light Mode Overrides for Map */
+
+
+        /* --- GLOBAL SHADOWLESS GLASSMORPISM DESIGN SYSTEM --- */
+        .cs-card,
+        .cs-insight-card,
+        .cs-final-idea-card,
+        .cs-metric-card,
+        .cs-idea-sticky,
+        .cs-empathy-quadrant,
+        .cs-pyramid-layer,
+        .cs-affinity-cluster {
+            background: var(--bg-card) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            box-shadow: none !important;
+            border: 1px solid var(--border-medium) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .cs-card:hover,
+        .cs-insight-card:hover,
+        .cs-final-idea-card:hover,
+        .cs-metric-card:hover,
+        .cs-idea-sticky:hover,
+        .cs-empathy-quadrant:hover,
+        .cs-pyramid-layer:hover,
+        .cs-affinity-cluster:hover {
+            background: var(--bg-card-heavy) !important;
+            border-color: var(--accent) !important;
+            transform: translateY(-5px) !important;
+            box-shadow: var(--shadow-lg) !important;
+        }
+
+        /* LIGHT MODE ADAPTATION */
+
+
+        /* Light Mode Overrides for Pyramid */
+
+        /* Light Mode Overrides for Flowchart */
+        /* User Priority Pyramid Styles */
+        .cs-pyramid-container {
+            width: 100%;
+            margin: 0 0 6rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 24px;
+            padding: 5rem 4rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            gap: 6rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cs-pyramid-axis {
+            position: relative;
+            height: 380px;
+            width: 40px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .cs-pyramid-axis::before {
+            content: 'Frequency →';
+            position: absolute;
+            left: -75px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            white-space: nowrap;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .cs-pyramid-visual {
+            width: 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .cs-pyramid-layer {
+            position: relative;
+            width: 100%;
+            height: 125px;
+            background: rgba(var(--primary-rgb), 0.05);
+            border: 1px solid var(--border-medium);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem; /* Exactly 16px */
+        }
+
+        .cs-pyramid-layer:hover {
+            background: rgba(var(--primary-rgb), 0.1);
+            transform: scale(1.03);
+            z-index: 10;
+            border-color: var(--accent);
+        }
+
+        .layer-primary {
+            width: 65%;
+            clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+            background: rgba(var(--primary-rgb), 0.15);
+        }
+
+        .layer-secondary {
+            width: 85%;
+            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+        }
+
+        .layer-low {
+            width: 100%;
+            clip-path: polygon(7% 0%, 93% 0%, 100% 100%, 0% 100%);
+        }
+
+        .cs-pyramid-labels {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 380px;
+            padding-left: 2rem;
+            max-width: 350px;
+        }
+
+        .cs-pyramid-label-group {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .cs-pyramid-label-group::before {
+            content: '';
+            position: absolute;
+            left: -120px;
+            top: 50%;
+            width: 100px;
+            border-top: 1px dashed var(--border-medium);
+        }
+
+        .cs-pyramid-label-group h4 {
+            color: var(--accent);
+            font-size: 1rem; /* Exactly 16px */
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .cs-pyramid-label-group p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        @media (max-width: 992px) {
+            .cs-pyramid-container {
+                display: none !important;
+            }
+
+            .cs-pyramid-mobile {
+                display: flex !important;
+            }
+
+            .cs-pyramid-section {
+                padding: 2.5rem 1.25rem !important;
+                margin: 2rem 0 !important;
+                background: var(--bg-card) !important;
+                backdrop-filter: var(--blur-glass) !important;
+                -webkit-backdrop-filter: var(--blur-glass) !important;
+                border: 1px solid var(--border-medium) !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                border-radius: 24px !important;
+            }
+        }
+
+        .cs-pyramid-mobile-header {
+            display: none;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .cs-pyramid-mobile-header {
+                display: block;
+            }
+
+            .cs-section-subtitle.pyramid-title {
+                display: none;
+            }
+        }
+
+        .cs-pyramid-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 0;
+            padding: 1rem 0;
+            width: 100%;
+        }
+
+        .pyramid-mobile-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .cs-pyramid-mobile .cs-pyramid-layer {
+            height: auto;
+            min-height: 110px;
+            padding: 1.25rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.35rem;
+            margin-bottom: 0;
+            background: var(--accent-light) !important;
+            border: 1px solid rgba(229, 199, 107, 0.2);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2) !important;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+        }
+
+        .cs-pyramid-mobile .cs-pyramid-layer .layer-title {
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 0.2rem;
+            font-size: 0.5rem;
+        }
+
+        .cs-pyramid-mobile .cs-pyramid-layer h4 {
+            color: var(--accent);
+            font-size: 0.75rem;
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cs-pyramid-mobile .cs-pyramid-layer p {
+            color: var(--text-secondary);
+            font-size: 0.55rem;
+            margin: 0.1rem 0 0;
+            opacity: 0.7;
+            line-height: 1.2;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cs-pyramid-mobile .layer-primary {
+            width: 85%;
+            clip-path: polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%);
+        }
+
+        .cs-pyramid-mobile .layer-secondary {
+            width: 92%;
+            clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
+        }
+
+        .cs-pyramid-mobile .layer-low {
+            width: 100%;
+            clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+        }
+
+        .cs-section-subtitle.pyramid-title {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+
+        /* Research Approach Flowchart Styles */
+        .cs-flow-container {
+            width: 100%;
+            margin: 0 0 6rem 0;
+            background: var(--bg-card);
+            background-image: 
+                linear-gradient(rgba(229, 199, 107, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(229, 199, 107, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            padding: 5rem 4rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cs-flow-box {
+            padding: 2rem 4rem;
+            border: 2px solid rgba(229, 199, 107, 0.2);
+            border-radius: 16px;
+            background: var(--bg-card);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 450px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .cs-flow-box:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(229, 199, 107, 0.1);
+        }
+
+        .cs-flow-box h4 {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-weight: 800;
+        }
+
+        .cs-flow-box p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .cs-flow-line {
+            width: 1px;
+            height: 40px;
+            background: var(--border-medium);
+        }
+
+        .cs-flow-split {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            justify-content: center;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .cs-flow-split::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            width: 50%;
+            height: 30px;
+            border-top: 1px solid var(--border-medium);
+
+            border-right: 1px solid var(--border-medium);
+        }
+
+        .cs-flow-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+            max-width: 420px;
+        }
+
+        .cs-branch-type {
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .type-qual {
+            border-color: rgba(66, 185, 159, 0.2);
+            background: rgba(66, 185, 159, 0.03);
+        }
+
+        .type-quant {
+            border-color: rgba(234, 67, 53, 0.2);
+            background: rgba(234, 67, 53, 0.03);
+        }
+
+        .type-qual h4 {
+            color: #42b99f;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .type-quant h4 {
+            color: #ea4335;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cs-branch-type p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cs-branch-result {
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .result-qual {
+            background: #42b99f;
+            color: #fff;
+        }
+
+        .result-quant {
+            background: #ea4335;
+            color: #fff;
+        }
+
+        @media (max-width: 992px) {
+            .cs-research-section {
+                padding: 1rem 0 !important;
+                margin: 2rem 0 !important;
+                background: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow-x: hidden !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            /* Remove outer parent box for Affinity Mapping on mobile */
+            .cs-affinity-board,
+            body.dark-mode .cs-affinity-board {
+                background: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 1rem !important;
+                width: 100% !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+            }
+
+            .cs-affinity-board::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            /* Full-width cluster cards on mobile - horizontal scroll */
+            .cs-affinity-cluster {
+                width: 100% !important;
+                min-width: 85vw !important;
+                max-width: 85vw !important;
+                box-sizing: border-box !important;
+                flex-shrink: 0 !important;
+                scroll-snap-align: start !important;
+            }
+
+            /* User Persona Mobile Enhancements */
+            .cs-persona,
+            body.dark-mode .cs-persona {
+                background: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                padding: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+            }
+
+            .cs-persona-left {
+                width: 100% !important;
+                padding: 2rem !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                border-radius: 14px !important;
+                background: var(--bg-card) !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+            }
+
+            .cs-persona-details {
+                padding: 0 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 1rem !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+                padding-bottom: 0.5rem !important;
+            }
+
+            .cs-persona-details::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .cs-persona-section {
+                padding: 1.5rem !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                border-radius: 14px !important;
+                background: var(--bg-card) !important;
+                box-sizing: border-box !important;
+                min-width: 85vw !important;
+                max-width: 85vw !important;
+                flex-shrink: 0 !important;
+                scroll-snap-align: start !important;
+            }
+
+            .cs-persona-problem {
+                padding: 1.5rem !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                border-radius: 14px !important;
+                background: var(--bg-card) !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .cs-persona-left .cs-persona-problem {
+                margin-top: 1.5rem !important;
+                border-radius: 12px !important;
+                background: #1c1b16 !important; /* Specific dark warmth from reference */
+                border: 1px solid rgba(229, 199, 107, 0.1) !important;
+            }
+
+            .show-mobile-only {
+                display: block !important;
+            }
+
+            .hide-mobile {
+                display: none !important;
+            }
+
+            /* Remove outer parent box for Discover Ideas on mobile */
+            .cs-ideas-board,
+            body.dark-mode .cs-ideas-board {
+                background: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                margin: 2rem 0 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 1rem !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+                padding-bottom: 0.5rem !important;
+            }
+
+            .cs-ideas-board::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .cs-idea-cluster {
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                border-radius: 14px !important;
+                background: var(--bg-card) !important;
+                padding: 1.5rem !important;
+                min-width: 85vw !important;
+                max-width: 85vw !important;
+                flex-shrink: 0 !important;
+                scroll-snap-align: start !important;
+            }
+
+            .cs-research-mobile-header {
+                display: none !important;
+            }
+
+            /* Strategic Pivot Mobile Enhancements */
+            .cs-pivot-container,
+            body.dark-mode .cs-pivot-container {
+                background: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+
+            .cs-pivot-box {
+                background: var(--accent-light) !important;
+                border: 1px solid var(--accent-30) !important;
+                border-radius: 14px !important;
+                padding: 2rem !important;
+                box-sizing: border-box !important;
+                flex: 0 0 85% !important;
+                scroll-snap-align: start !important;
+                text-align: left !important;
+                margin-right: 1rem !important;
+            }
+
+            .cs-pivot-box.box-to {
+                margin-right: 0 !important;
+            }
+
+            .cs-arch-footer {
+                padding: 1.5rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cs-arch-footer h4 {
+                font-size: 1.2rem !important;
+                line-height: 1.4 !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .cs-arch-footer p {
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
+            }
+
+            /* High-Fidelity Spacing Fix */
+            .cs-hifi-container {
+                margin-bottom: 2rem !important;
+            }
+
+            .cs-hifi-features {
+                margin-top: 2rem !important;
+            }
+
+            /* Comparison Carousel Spacing */
+            .cs-comparison-grid {
+                margin-top: 2rem !important;
+            }
+
+            .cs-comparison-card {
+                min-height: 300px !important;
+                flex: 0 0 85% !important;
+                scroll-snap-align: start !important;
+                margin-right: 1rem !important;
+            }
+
+            .cs-comparison-label {
+                top: 1rem !important;
+                left: 1rem !important;
+                padding: 0.4rem 1rem !important;
+                font-size: 0.6rem !important;
+            }
+        }
+
+        /* Comparison Section Styles */
+        .cs-comparison-label {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: #d4af37;
+            color: #000;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            z-index: 10;
+        }
+
+        .cs-comparison-placeholder {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .placeholder-text {
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+        }
+
+        /* Desktop specific pivot layout to maintain original design */
+        @media (min-width: 993px) {
+            .cs-pivot-box.box-from {
+                border-right: 1px solid var(--accent-30);
+                padding-right: 2rem;
+            }
+            .cs-pivot-box.box-to {
+                padding-left: 2rem;
+            }
+        }
+        @media (max-width: 992px) {
+            .cs-section-subtitle {
+                display: block !important;
+                font-family: 'Playfair Display', serif !important;
+                font-size: 24px !important;
+                font-weight: 700 !important;
+                color: var(--accent) !important;
+                text-transform: none !important;
+                letter-spacing: 0 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 2rem !important;
+                text-align: left !important;
+                width: 100% !important;
+            }
+
+            .cs-flow-container,
+            .cs-flow-split,
+            .cs-flow-branch,
+            .branch-quant,
+            .branch-qual,
+            body.dark-mode .cs-flow-container,
+            body.dark-mode .cs-flow-split,
+            body.dark-mode .cs-flow-branch {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                background: transparent !important;
+                border: none !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                box-sizing: border-box !important;
+                position: relative !important;
+                left: auto !important;
+                right: auto !important;
+                transform: none !important;
+            }
+
+            .cs-flow-split::before,
+            .cs-flow-split::after,
+            .cs-flow-branch::after {
+                display: none !important;
+            }
+
+            .branch-quant,
+            .branch-qual {
+                background: var(--bg-card) !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                border-radius: 14px !important;
+                padding: 1rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cs-flow-box {
+                padding: 0.75rem 1rem !important;
+                min-width: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 14px !important;
+                /* Sophisticated 14px radius */
+                background: var(--bg-card) !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                box-shadow: none !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
+                margin: 0 auto !important;
+            }
+
+            .cs-flow-box h4 {
+                font-size: 0.8rem !important;
+                margin-bottom: 0.4rem !important;
+                color: var(--accent) !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.12em !important;
+                text-align: center !important;
+            }
+
+            .cs-flow-box p {
+                font-size: 0.75rem !important;
+                color: var(--text-secondary) !important;
+                opacity: 0.9;
+                line-height: 1.4 !important;
+                text-align: center !important;
+                margin: 0 !important;
+            }
+
+            .cs-flow-line {
+                width: 1px !important;
+                height: 8px !important;
+                background: var(--border-medium) !important;
+                margin: 0 auto !important;
+                display: block !important;
+            }
+
+            .cs-flow-branch::before {
+                content: '' !important;
+                width: 1px !important;
+                height: 8px !important;
+                background: var(--border-medium) !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            .cs-branch-type {
+                padding: 0.6rem 1rem !important;
+                border-radius: 14px !important;
+                /* Sophisticated 14px radius */
+                background: var(--bg-card) !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+            }
+
+            .cs-branch-type h4 {
+                font-size: 1rem !important;
+                margin-bottom: 0.3rem !important;
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            .cs-branch-type p {
+                font-size: 0.75rem !important;
+                text-align: center !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+
+            .cs-branch-result {
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 14px !important;
+                /* Sophisticated 14px radius */
+                padding: 0.75rem 0.5rem !important;
+                font-size: 0.7rem !important;
+                font-weight: 700 !important;
+                margin: 8px auto 0 !important;
+                text-transform: none !important;
+                position: relative;
+                box-sizing: border-box !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                border: 1px solid rgba(229, 199, 107, 0.2) !important;
+            }
+        }
+
+
+
+
+
+
+        .cs-research-mobile-header {
+            display: none;
+        }
+
+        /* Refined Empathy Map Styles */
+        .cs-empathy-container {
+            width: 100%;
+            margin: 6rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            padding: 5rem;
+            position: relative;
+        }
+
+        .cs-empathy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2.5rem;
+            position: relative;
+        }
+
+        .cs-empathy-quadrant {
+            border-radius: 20px;
+            padding: 3rem;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border-medium);
+        }
+
+        .cs-empathy-quadrant.q-says {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .cs-empathy-quadrant.q-thinks {
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .cs-empathy-quadrant.q-does {
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .cs-empathy-quadrant.q-feels {
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .cs-empathy-header {
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 1rem;
+        }
+
+        .cs-empathy-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .cs-empathy-center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: var(--bg-main);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 0 50px var(--accent-light);
+        }
+
+        .cs-empathy-center-node svg {
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+        }
+
+        .cs-empathy-center-node span {
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .cs-empathy-container {
+                padding: 3rem;
+            }
+
+            .cs-empathy-center-node {
+                display: none;
+            }
+
+            .cs-empathy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .cs-empathy-container,
+            body.dark-mode .cs-empathy-container {
+                padding: 0 !important;
+                border-radius: 0 !important;
+                background: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                margin: 1rem 0 !important;
+            }
+
+            .cs-empathy-grid {
+                display: flex !important;
+                flex-direction: row !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+                gap: 1rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+
+            .cs-empathy-grid::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .cs-empathy-quadrant {
+                min-width: 85vw !important;
+                max-width: 85vw !important;
+                flex-shrink: 0 !important;
+                scroll-snap-align: start !important;
+                min-height: auto !important;
+                padding: 1.5rem !important;
+                border-radius: 14px !important;
+            }
+        }
+
+        /* Journey Map Styles */
+        .cs-journey-wrapper {
+            width: 100%;
+            margin: 6rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cs-journey-table {
+            display: grid;
+            grid-template-columns: 200px repeat(5, 1fr);
+            width: 100%;
+        }
+
+        .cs-journey-row {
+            display: contents;
+        }
+
+        .cs-journey-cell {
+            padding: 2.5rem 2rem;
+            border-right: 1px solid var(--border-medium);
+            border-bottom: 1px solid var(--border-medium);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .cs-journey-cell.header-row {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--accent);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.8rem;
+        }
+
+        .cs-journey-cell.label-col {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--accent);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+        }
+
+        .cs-persona-left {
+            padding-right: 0;
+            border-right: none;
+        }
+
+        .cs-journey-row:last-child .cs-journey-cell {
+            border-bottom: none;
+        }
+
+        .cs-journey-emotion {
+            color: var(--accent);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .cs-journey-ownership {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1200px) {
+            .cs-journey-table {
+                grid-template-columns: 150px repeat(5, 250px);
+                overflow-x: auto;
+            }
+        }
+
+        /* Key Insights Styles */
+        .cs-insight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 24px 0;
+        }
+
+        .cs-insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .cs-insight-card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-card-heavy);
+            border-color: var(--accent-glow);
+            box-shadow: var(--shadow-md);
+        }
+
+        .cs-insight-card h4 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cs-insight-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 992px) {
+            .cs-insight-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Ideation Board Styles */
+        .cs-ideas-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 24px 0;
+            padding: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+        }
+
+        .cs-idea-cluster {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px dashed var(--border-medium);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cs-idea-theme {
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            text-align: center;
+        }
+
+        .cs-idea-sticky {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .cs-idea-sticky:hover {
+            transform: translateX(5px);
+            background: var(--bg-card-heavy);
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            .cs-ideas-board {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+        }
+
+        /* Prioritization Matrix Styles */
+        .cs-matrix-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin: 0 0 24px 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            padding: 4rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cs-matrix-grid {
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+            border-bottom: 1px solid var(--border-medium);
+        }
+
+        .cs-matrix-axis {
+            position: absolute;
+            background: var(--border-medium);
+        }
+
+        .cs-matrix-y-axis {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+        }
+
+        .cs-matrix-x-axis {
+            height: 1px;
+            width: 100%;
+            top: 50%;
+            left: 0;
+        }
+
+        .cs-matrix-label {
+            position: absolute;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+
+        .cs-matrix-bubble {
+            position: absolute;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-main);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .cs-matrix-bubble:hover {
+            transform: scale(1.05);
+            background: var(--accent-light);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        @media (max-width: 768px) {
+            .cs-matrix-container {
+                aspect-ratio: 1;
+                padding: 2rem;
+            }
+
+            .cs-matrix-bubble {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Final Ideas Styles */
+        .cs-final-ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 24px 0;
+        }
+
+        .cs-final-idea-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .cs-final-idea-card:hover {
+            transform: translateY(-10px);
+            background: var(--bg-card-heavy);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cs-final-idea-num {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .cs-final-idea-card h4 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cs-final-idea-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .cs-final-ideas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Planning Architecture Styles */
+        .cs-arch-container {
+            width: 100%;
+            margin: 24px 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cs-flow-viewport {
+            width: 100%;
+            padding: 5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .cs-flow-node {
+            background: var(--bg-main);
+            border: 1px solid var(--border-medium);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .cs-flow-node.gold {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cs-flow-decision {
+            width: 120px;
+            height: 120px;
+            background: var(--accent); /* This creates the border color */
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .cs-flow-decision::before {
+            content: '';
+            position: absolute;
+            top: 1.5px; /* Border thickness */
+            left: 1.5px;
+            right: 1.5px;
+            bottom: 1.5px;
+            background: var(--bg-card);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            z-index: 1;
+        }
+
+        .cs-flow-decision span {
+            position: relative;
+            z-index: 2;
+            font-size: 0.8rem;
+            color: #fff; /* Changed to white for high contrast */
+            font-weight: 800;
+            text-align: center;
+            max-width: 85%;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+        }
+
+        /* --- LIGHT MODE FLOWCHART OVERRIDES --- */
+        [data-theme="light"] .cs-flow-decision::before,
+        body:not(.dark-mode) .cs-flow-decision::before {
+            background: var(--accent) !important; /* Solid gold background to keep white text visible */
+        }
+
+        [data-theme="light"] .cs-flow-viewport path,
+        body:not(.dark-mode) .cs-flow-viewport path {
+            stroke: var(--accent) !important;
+            stroke-opacity: 0.6;
+        }
+
+        [data-theme="light"] .cs-flow-viewport marker path,
+        body:not(.dark-mode) .cs-flow-viewport marker path {
+            fill: var(--accent) !important;
+        }
+
+        [data-theme="light"] .cs-flow-viewport text,
+        body:not(.dark-mode) .cs-flow-viewport text {
+            fill: var(--accent) !important; /* Golden labels for visibility on light bg */
+        }
+
+        /* --- MOBILE HORIZONTAL SCROLL FOR ARCHITECTURE --- */
+        @media (max-width: 992px) {
+            .cs-arch-container {
+                overflow: hidden !important;
+                border-radius: 24px !important;
+            }
+            .cs-flow-viewport {
+                justify-content: flex-start !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                padding: 3rem 1.5rem !important;
+            }
+            .cs-flow-viewport svg {
+                min-width: 1000px !important; /* Preserve full diagram width */
+                max-width: none !important;
+                height: auto !important;
+            }
+        }
+
+        .cs-arch-footer {
+            background: rgba(var(--primary-rgb), 0.05);
+            padding: 3rem 4rem;
+            border-top: 1px solid var(--border-medium);
+        }
+
+        .cs-arch-footer h4 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cs-arch-footer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 800px;
+        }
+    </style>
+    <script>
+        // Sync body class with documentElement state
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        });
+    </script>
+  <script id="iframe-helper">
+    if (window.self !== window.top) {
+      document.documentElement.classList.add('iframe-mode');
+      const params = new URLSearchParams(window.location.search);
+      const theme = params.get('theme');
+      if (theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        } else {
+          document.documentElement.classList.remove('dark-mode');
+        }
+      }
+    }
+  </script>
+  <style id="iframe-style">
+    html.iframe-mode nav,
+    html.iframe-mode footer,
+    html.iframe-mode .cs-footer,
+    html.iframe-mode .back-btn,
+    html.iframe-mode .back-to-home,
+    html.iframe-mode .nav-bar,
+    html.iframe-mode header,
+    html.iframe-mode .theme-toggle,
+    html.iframe-mode #cs-theme-toggle {
+      display: none !important;
+    }
+    html.iframe-mode body {
+      padding-top: 0 !important;
+    }
+  </style>
+</head>
+
+<body class="dark-mode">
+    <div class="light-bubbles">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+        <div class="bubble b4"></div>
+        <div class="bubble b5"></div>
+        <div class="bubble b6"></div>
+        <div class="bubble b7"></div>
+        <div class="bubble b8"></div>
+    </div>
+
+
+    <div class="glass-lines-bg"></div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+
+    <nav>
+        <div class="ds-container"
+            style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="../index.html" class="back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+                Back to Home
+            </a>
+            <div class="nav-right">
+                <button class="theme-toggle" id="cs-theme-toggle" aria-label="Toggle dark mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mode-icon moon-icon">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mode-icon sun-icon" style="display:none;">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="m4.93 4.93 1.41 1.41" />
+                        <path d="m17.66 17.66 1.41 1.41" />
+                        <path d="M2 12h2" />
+                        <path d="M20 12h2" />
+                        <path d="m6.34 17.66-1.41 1.41" />
+                        <path d="m19.07 4.93-1.41 1.41" />
+                    </svg>
+                </button>
+                <button class="burger-menu" id="burger-menu" aria-label="Menu">
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="case-study-main">
+        <div class="ds-container">
+
+            <!-- 0. HERO -->
+            <section class="cs-hero-centered reveal">
+                <div class="cs-hero-visual-centered">
+                    <div class="cs-hero-image-wrapper">
+                        <img src="image/hero-image/roundmart_hero_main.png" alt="RoundMart High-Fidelity Marketplace Dashboard Mockups"
+                            class="cs-hero-image" loading="eager" />
+
+
+
+                        <!-- Top Left Badge -->
+                        <div class="hero-badge badge-tl">
+                            <div class="badge-top">
+                                <span class="badge-num">4.8</span>
+                                <svg class="badge-sparkline" viewBox="0 0 50 20">
+                                    <path d="M0,15 Q10,15 15,10 T30,5 T50,2" />
+                                </svg>
+                            </div>
+                            <div class="badge-bottom">TRUST SCORE</div>
+                        </div>
+
+                        <!-- Top Right Badge -->
+                        <div class="hero-badge badge-tr">
+                            <div class="badge-top">
+                                <span class="badge-num">12M+</span>
+                                <svg class="badge-sparkline" viewBox="0 0 50 20">
+                                    <path d="M0,18 L10,12 L25,15 L40,5 L50,2" />
+                                </svg>
+                            </div>
+                            <div class="badge-bottom">ACTIVE USERS</div>
+                        </div>
+
+                        <!-- Bottom Left Badge -->
+                        <div class="hero-badge badge-bl">
+                            <div class="badge-top">
+                                <span class="badge-num">30%</span>
+                                <svg class="badge-sparkline" viewBox="0 0 50 20">
+                                    <path d="M0,2 Q10,5 20,10 T40,15 T50,18" />
+                                </svg>
+                            </div>
+                            <div class="badge-bottom">FASTER DISCOVERY</div>
+                        </div>
+
+                        <!-- Bottom Right Badge -->
+                        <div class="hero-badge badge-br">
+                            <div class="badge-top">
+                                <span class="badge-num">85%</span>
+                                <svg class="badge-sparkline" viewBox="0 0 50 20">
+                                    <path d="M0,18 L15,15 L30,8 L45,2 L50,0" />
+                                </svg>
+                            </div>
+                            <div class="badge-bottom">VERIFIED LEADS</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cs-hero-content-centered">
+                    <h1 class="ds-heading-h1 cs-title-centered">Leading Classifieds Platform</h1>
+                    <p class="cs-subtitle-centered">Bridging the trust gap in Indian and Middle Eastern real estate and service markets through verified, visual-first discovery.</p>
+
+                    <div class="cs-meta-row">
+                        <div class="meta-item-inline">
+                            <span class="meta-label">Role:</span> Lead Product Designer
+                        </div>
+                        <div class="meta-item-inline">
+                            <span class="meta-label">Duration:</span> 16 Weeks
+                        </div>
+                        <div class="meta-item-inline">
+                            <span class="meta-label">Context:</span> Marketplace
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 0. OVERVIEW & PROBLEM -->
+            <section class="cs-section cs-accordion-section reveal cs-expanded">
+                <div class="cs-section-header accordion-toggle">
+                    <div class="cs-section-marker">0</div>
+                    <h2 class="ds-heading-h2">Project Overview</h2>
+                    <p>Unifying regional classifieds through a high-trust, verified discovery ecosystem.</p>
+                </div>
+                <div class="cs-section-content">
+                    <div class="cs-overview-grid">
+                        <div class="cs-overview-left" style="flex: 1;">
+                            <div class="cs-overview-text">
+                                <p>RoundMart addresses the fragmented and often untrustworthy nature of digital marketplaces in regional hubs like Jaipur, Kerala, and the Middle East. While category-specific apps exist, they lack the unified trust layer needed for high-value decisions.
+                                </p>
+                                <p>The goal was to build an ecosystem where real estate, vehicles, and services are discoverable through a visually-guided, verified interface that reflects regional user behavior.</p>
+                            </div>
+                        </div>
+                        <div class="cs-overview-right" style="flex: 1.2;">
+                            <h3 class="ds-heading-h3 cs-section-subtitle">The Problem</h3>
+                            <div class="cs-grid-2" style="margin-top: 0; gap: 1.5rem;">
+                                <div class="ds-card">
+                                    <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Trust Deficit</h4>
+                                    <p>Users face significant challenges with duplicate listings, outdated ads, and unverified brokers in high-value segments.</p>
+                                </div>
+                                <div class="ds-card">
+                                    <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Fragmented UX</h4>
+                                    <p>The journey from discovery to closing a deal is broken across multiple platforms, reducing efficiency and user confidence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. EMPATHY -->
+            <section class="cs-section cs-accordion-section reveal">
+                <div class="cs-section-header">
+                    <div class="cs-section-marker">E</div>
+                    <h2 class="ds-heading-h2">Let's Empathize</h2>
+
+                    <p>Understanding the human behavior, market constraints, and foundational insights that drive the
+                        problem space.</p>
+                </div>
+                <div class="cs-section-content">
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Business Understanding</h3>
+                    <div class="cs-grid-3 carousel-mobile">
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Business Goal</h4>
+                            <p>Become the primary destination for verified real estate and service discovery in emerging markets.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Constraints</h4>
+                            <p>Integrating localized payment patterns and regional verification standards across different jurisdictions.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Market Opportunity</h4>
+                            <p>Tapping into the $40B+ emerging classifieds market with a "Verification-as-a-Service" model.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Competitive Analysis</h3>
+                    <div class="cs-grid-3 carousel-mobile">
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">OLX & Dubizzle</h4>
+                            <p><strong>Pros:</strong> Massive reach, high listing volume across all categories.</p>
+                            <p style="margin-top: 1rem;"><strong>Cons:</strong> High spam ratios, unverified "ghost" listings, and fragmented communication.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Property Finder & Bayut</h4>
+                            <p><strong>Pros:</strong> Deep vertical features for real estate, detailed agent profiles.</p>
+                            <p style="margin-top: 1rem;"><strong>Cons:</strong> Restricted to property; users must switch platforms for other high-value needs.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Social Marketplace</h4>
+                            <p><strong>Pros:</strong> Direct community trust and informal negotiation.</p>
+                            <p style="margin-top: 1rem;"><strong>Cons:</strong> Zero search structure, difficult to verify legitimacy, no deal security.</p>
+                        </div>
+                    </div>
+
+                    <div class="cs-map-container reveal">
+                        <div class="cs-map-title">Competitor Positioning Map</div>
+
+                        <!-- Mobile View Map -->
+                        <div class="cs-map-mobile-view">
+                            <div class="cs-map-mobile-header">COMPETITOR POSITIONING MAP</div>
+
+                            <!-- Our Solution Card -->
+                            <div class="cs-map-mobile-solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-info">
+                                        <h2>RoundMart</h2>
+                                        <p class="solution-tagline">Verified Local Ecosystem</p>
+                                    </div>
+                                    <div class="market-leader-badge">TARGET GAP</div>
+                                </div>
+
+                                <div class="solution-metrics">
+                                    <div class="metric-item">
+                                        <span class="metric-label">TRUST / VERIFICATION</span>
+                                        <div class="metric-progress">
+                                            <div class="segment active"></div>
+                                            <div class="segment active"></div>
+                                            <div class="segment active"></div>
+                                        </div>
+                                        <span class="metric-value">MAX</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">CATEGORY SCOPE</span>
+                                        <div class="metric-progress">
+                                            <div class="segment active"></div>
+                                            <div class="segment active"></div>
+                                            <div class="segment active"></div>
+                                        </div>
+                                        <span class="metric-value">WIDE</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Horizontal Slider for Competitor Cards -->
+                            <div class="cs-map-mobile-slider">
+                                <!-- Horizontal Giants -->
+                                <div class="cs-map-mobile-competitor-card">
+                                    <div class="competitor-header">
+                                        <h3>OLX & Dubizzle</h3>
+                                        <p class="competitor-quote">"High volume, trust deficit"</p>
+                                    </div>
+                                    <div class="competitor-metrics">
+                                        <div class="comp-metric-box">
+                                            <span class="label">REACH</span>
+                                            <span class="value">MAX</span>
+                                        </div>
+                                        <div class="comp-metric-box">
+                                            <span class="label">TRUST</span>
+                                            <span class="value">LOW</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Vertical Specialists -->
+                                <div class="cs-map-mobile-competitor-card">
+                                    <div class="competitor-header">
+                                        <h3>Property Finder</h3>
+                                        <p class="competitor-quote">"Niche focus, high trust"</p>
+                                    </div>
+                                    <div class="competitor-metrics">
+                                        <div class="comp-metric-box">
+                                            <span class="label">TRUST</span>
+                                            <span class="value">HIGH</span>
+                                        </div>
+                                        <div class="comp-metric-box">
+                                            <span class="label">SCOPE</span>
+                                            <span class="value">LOW</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Community Groups -->
+                                <div class="cs-map-mobile-competitor-card">
+                                    <div class="competitor-header">
+                                        <h3>FB Marketplace</h3>
+                                        <p class="competitor-quote">"Informal & Unorganized"</p>
+                                    </div>
+                                    <div class="competitor-metrics">
+                                        <div class="comp-metric-box">
+                                            <span class="label">TRUST</span>
+                                            <span class="value">MED</span>
+                                        </div>
+                                        <div class="comp-metric-box">
+                                            <span class="label">CONVENIENCE</span>
+                                            <span class="value">HIGH</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cs-map-mobile-caption">COMPETITOR POSITIONING MAP: TRUST VS CATEGORY SCOPE</div>
+                        </div>
+
+                        <div class="cs-map-canvas">
+                            <!-- Axes Titles -->
+                            <div class="cs-axis-label axis-y-title">Category Scope ↑</div>
+                            <div class="cs-axis-label axis-x-title">Trust & Verification →</div>
+
+                            <!-- Y-Axis Labels -->
+                            <div class="cs-axis-label label-high-y">Niche</div>
+                            <div class="cs-axis-label label-med-y">Hybrid</div>
+                            <div class="cs-axis-label label-low-y">Wide</div>
+
+                            <!-- X-Axis Labels -->
+                            <div class="cs-axis-label label-low-x">Low</div>
+                            <div class="cs-axis-label label-med-x">Med</div>
+                            <div class="cs-axis-label label-high-x">High</div>
+
+                            <!-- Data Points -->
+                            <div class="cs-map-point point-restaurants">
+                                <h5>OLX & Dubizzle</h5>
+                                <p>Massive reach, fragmented trust</p>
+                            </div>
+                            <div class="cs-map-point point-tiffin">
+                                <h5>Property Finder</h5>
+                                <p>Verified property vertical</p>
+                            </div>
+                            <div class="cs-map-point point-cooking">
+                                <h5>Vertical Apps</h5>
+                                <p>Bayut / OpenSooq</p>
+                            </div>
+                            <div class="cs-map-point point-delivery">
+                                <h5>Social Groups</h5>
+                                <p>Informal regional networks</p>
+                            </div>
+                            <div class="cs-target-zone">
+                                <div class="cs-map-point point-solution">
+                                    <h5>RoundMart</h5>
+                                    <p>Verified Local Discovery</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cs-map-caption">COMPETITOR POSITIONING MAP: TRUST VS CATEGORY SCOPE</div>
+                    </div>
+
+                    <div class="cs-problem reveal" style="margin-top: 4rem;">
+                        <span
+                            style="color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 1.5rem;">Strategic Challenge</span>
+                        <h3
+                            style="font-size: 2.2rem; line-height: 1.3; font-family: 'Playfair Display', serif; color: var(--accent);">
+                            How might we create a unified classified ecosystem that bridges the trust gap for high-value life decisions in regional markets?</h3>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">User Discovery</h3>
+                    <div class="cs-grid-2 carousel-mobile">
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1.5rem; font-size: 1.3rem;">The Local Entrepreneur</h4>
+                            <p>Scaling a regional business, needs verified commercial spaces and wholesale service providers without the noise of spam listings.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1.5rem; font-size: 1.3rem;">The Urban Professional</h4>
+                            <p>Seeking high-trust property rentals and reliable home services in new cities, prioritizing verified credentials and visual transparency.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle pyramid-title">User Priority Pyramid</h3>
+                    <div class="cs-pyramid-section reveal">
+                        <div class="cs-pyramid-mobile-header">USER PRIORITY PYRAMID</div>
+
+                        <div class="cs-pyramid-container">
+                            <div class="cs-pyramid-axis">
+                                <span>High</span>
+                                <span>Med</span>
+                                <span>Low</span>
+                            </div>
+                            <div class="cs-pyramid-visual">
+                                <div class="cs-pyramid-layer layer-primary">Property Seekers</div>
+                                <div class="cs-pyramid-layer layer-secondary">Service Finders</div>
+                                <div class="cs-pyramid-layer layer-low">Casual Browsers</div>
+                            </div>
+                            <div class="cs-pyramid-labels">
+                                <div class="cs-pyramid-label-group">
+                                    <h4>Buyers & Renters</h4>
+                                    <p>High-value intent</p>
+                                </div>
+                                <div class="cs-pyramid-label-group">
+                                    <h4>Home & Business</h4>
+                                    <p>Recurring service needs</p>
+                                </div>
+                                <div class="cs-pyramid-label-group">
+                                    <h4>Classified Explorers</h4>
+                                    <p>Cars, Electronics, Fashion</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Pyramid View -->
+                        <div class="cs-pyramid-mobile">
+                            <div class="pyramid-mobile-item">
+                                <div class="cs-pyramid-layer layer-primary">
+                                    <span class="layer-title">PRIMARY USERS</span>
+                                    <h4>Property Seekers</h4>
+                                    <p>High-value buyers & renters</p>
+                                </div>
+                            </div>
+                            <div class="pyramid-mobile-item">
+                                <div class="cs-pyramid-layer layer-secondary">
+                                    <span class="layer-title">SECONDARY USERS</span>
+                                    <h4>Service Finders</h4>
+                                    <p>Home & business service needs</p>
+                                </div>
+                            </div>
+                            <div class="pyramid-mobile-item">
+                                <div class="cs-pyramid-layer layer-low">
+                                    <span class="layer-title">LOW-PRIORITY USERS</span>
+                                    <h4>Casual Browsers</h4>
+                                    <p>Cars, Electronics, Fashion</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cs-problem reveal" style="margin-top: 4rem;">
+                        <span
+                            style="color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 1.5rem;">Research Question</span>
+                        <h3
+                            style="font-size: 2.2rem; line-height: 1.3; font-family: 'Playfair Display', serif; color: var(--accent);">
+                            How might we scale verified listing verification without slowing down the fast-paced local market momentum?</h3>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Our research approach</h3>
+                    <div class="cs-research-section reveal">
+                        <div class="cs-flow-container">
+                            <!-- Goal -->
+                            <div class="cs-flow-box">
+                                <h4>Research goal</h4>
+                                <p>Define trust metrics + map regional discovery patterns</p>
+                            </div>
+
+                            <div class="cs-flow-line"></div>
+
+                            <!-- Method -->
+                            <div class="cs-flow-box">
+                                <h4>Human-Centered Insight</h4>
+                                <p>Exploratory phase to understand trust barriers and multi-category fragmentation.</p>
+                            </div>
+
+                            <div class="cs-flow-split">
+                                <!-- Quantitative (Top for Mobile) -->
+                                <div class="cs-flow-branch branch-quant">
+                                    <div class="cs-branch-type type-quant">
+                                        <h4>Quantitative</h4>
+                                        <p>Trust & Intent</p>
+                                    </div>
+                                    <div class="cs-branch-result result-quant">
+                                        Listing audit analysis • 500+ Users
+                                    </div>
+                                </div>
+
+                                <!-- Qualitative (Bottom for Mobile) -->
+                                <div class="cs-flow-branch branch-qual">
+                                    <div class="cs-branch-type type-qual">
+                                        <h4>Qualitative</h4>
+                                        <p>Verification Anxiety</p>
+                                    </div>
+                                    <div class="cs-branch-result result-qual">
+                                        User In-depth Interviews • 25+ Sessions
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. DEFINE -->
+            <section class="cs-section cs-accordion-section reveal">
+                <div class="cs-section-header">
+                    <div class="cs-section-marker">D</div>
+                    <h2 class="ds-heading-h2">Define Strategy</h2>
+                    <p>Synthesizing research data into precise problem statements and archetypal user models.</p>
+                </div>
+                <div class="cs-section-content">
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Affinity Mapping</h3>
+                    <div class="cs-affinity-board carousel-mobile reveal" style="margin-bottom: 4rem;">
+                        <div class="cs-affinity-cluster">
+                            <div class="cs-affinity-theme">Trust & Verification</div>
+                            <div class="cs-sticky accent">"I want to know if the property photos are real."</div>
+                            <div class="cs-sticky accent">"Verified seller tags matter more than the listed price."</div>
+                            <div class="cs-sticky accent">Fear of getting scammed by unverified intermediaries.</div>
+                        </div>
+                        <div class="cs-affinity-cluster">
+                            <div class="cs-affinity-theme">Visual Discovery</div>
+                            <div class="cs-sticky accent">"Why can't I see a 360° view of the commercial space?"</div>
+                            <div class="cs-sticky accent">Cluttered UI makes it hard to compare locations.</div>
+                            <div class="cs-sticky accent">Users want high-res, verified galleries for all listings.</div>
+                        </div>
+                        <div class="cs-affinity-cluster">
+                            <div class="cs-affinity-theme">Unified Scope</div>
+                            <div class="cs-sticky accent">Switching between property and service apps is annoying.</div>
+                            <div class="cs-sticky accent">Need for a centralized community-driven local network.</div>
+                            <div class="cs-sticky accent">Localized service providers lack a credible platform.</div>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Persona type: The Entrepreneur</h3>
+                    
+                    <!-- Persona 01 -->
+                    <div class="cs-persona reveal">
+                        <div class="cs-persona-left">
+                            <div class="cs-persona-avatar">
+                                <img src="../assets/images/persona_arjun.png" alt="Arjun Sharma" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            </div>
+                            <h3 class="cs-persona-name">Arjun Sharma</h3>
+                            <p class="cs-affinity-theme">Boutique Owner | Jaipur</p>
+
+                            <div class="cs-persona-meta">
+                                <div class="cs-persona-meta-item">
+                                    <span class="label">Age</span>
+                                    <span class="value">32</span>
+                                </div>
+                                <div class="cs-persona-meta-item">
+                                    <span class="label">Focus</span>
+                                    <span class="value">Commercial Scale</span>
+                                </div>
+                                <div class="cs-persona-meta-item">
+                                    <span class="label">Intent</span>
+                                    <span class="value">Growth-Minded</span>
+                                </div>
+                            </div>
+
+                            <div class="cs-persona-proficiency">
+                                <span class="cs-persona-proficiency-label">Daily Habits</span>
+                                <div class="cs-persona-meta-item">
+                                    <span class="label">Business Ops</span>
+                                    <span class="cs-affinity-theme">★★★★★</span>
+                                </div>
+                                <div class="cs-persona-meta-item">
+                                    <span class="label">Market Research</span>
+                                    <span class="cs-affinity-theme">★★★★☆</span>
+                                </div>
+                            </div>
+
+                            <div class="cs-persona-problem quote-mode show-mobile-only">
+                                <p>"Finding a verified commercial space in a busy market feels like a gamble. I need transparency, not just a phone number."</p>
+                            </div>
+                        </div>
+
+                        <div class="cs-persona-details">
+                            <div class="cs-persona-section">
+                                <h4 class="cs-affinity-theme">Bio</h4>
+                                <p class="bio-text">Arjun is scaling his retail business in Jaipur. He needs high-visibility shop rentals and reliable wholesale service providers. He is frustrated by the high volume of fake or outdated listings on existing classified sites.</p>
+                            </div>
+
+                            <div class="cs-persona-problem quote-mode hide-mobile">
+                                <p>"Finding a verified commercial space in a busy market feels like a gamble. I need transparency, not just a phone number."</p>
+                            </div>
+
+                            <div class="cs-persona-section">
+                                <h4 class="cs-affinity-theme">Wants & Needs</h4>
+                                <ul class="persona-list">
+                                    <li>Verified commercial property listings.</li>
+                                    <li>Direct, secure contact with verified brokers.</li>
+                                    <li>Multi-category discovery for business services.</li>
+                                </ul>
+                            </div>
+                            <div class="cs-persona-section">
+                                <h4 class="cs-affinity-theme">Frustrations</h4>
+                                <ul class="persona-list">
+                                    <li>Duplicate and 'Ghost' listings with false prices.</li>
+                                    <li>Lack of visual verification for property interiors.</li>
+                                    <li>Fragmented apps for different business needs.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Empathy Map 01 -->
+                    <div class="cs-empathy-container reveal" style="margin-top: 4rem;">
+                        <div class="cs-empathy-center-node">
+                            <span class="cs-persona-name-small">Arjun's Mindset</span>
+                        </div>
+
+                        <div class="cs-empathy-grid">
+                            <div class="cs-empathy-quadrant q-says">
+                                <span class="cs-empathy-header">SAYS</span>
+                                <div class="cs-empathy-content">
+                                    <p>"I can't trust these listings without seeing the actual space."</p>
+                                    <p>"Brokers often hide the actual condition of the property."</p>
+                                </div>
+                            </div>
+                            <div class="cs-empathy-quadrant q-thinks">
+                                <span class="cs-empathy-header">THINKS</span>
+                                <div class="cs-empathy-content">
+                                    <p>Will this investment scale my business effectively?</p>
+                                    <p>I need a verified partner, not just another listing site.</p>
+                                </div>
+                            </div>
+                            <div class="cs-empathy-quadrant q-does">
+                                <span class="cs-empathy-header">DOES</span>
+                                <div class="cs-empathy-content">
+                                    <p>Manually verifies every broker through local networks.</p>
+                                    <p>Spends weekends visiting mismatched property sites.</p>
+                                </div>
+                            </div>
+                            <div class="cs-empathy-quadrant q-feels">
+                                <span class="cs-empathy-header">FEELS</span>
+                                <div class="cs-empathy-content">
+                                    <p>Anxious about high-value transaction fraud.</p>
+                                    <p>Frustrated by the time wasted on unverified leads.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Journey Map 01 -->
+                    <div class="cs-journey-wrapper reveal" style="margin-top: 2rem; margin-bottom: 4rem;">
+                        <div class="cs-journey-table">
+                            <div class="cs-journey-row">
+                                <div class="cs-journey-cell label-col">STAGE</div>
+                                <div class="cs-journey-cell header-row">TRIGGER</div>
+                                <div class="cs-journey-cell header-row">DISCOVERY</div>
+                                <div class="cs-journey-cell header-row">VERIFICATION</div>
+                                <div class="cs-journey-cell header-row">TRANSACTION</div>
+                                <div class="cs-journey-cell header-row">RETENTION</div>
+                            </div>
+                            <div class="cs-journey-row">
+                                <div class="cs-journey-cell label-col">TOUCHPOINTS</div>
+                                <div class="cs-journey-cell">Business Growth,<br>Relocation Need</div>
+                                <div class="cs-journey-cell">RoundMart Search,<br>Visual Filters</div>
+                                <div class="cs-journey-cell">Verified Badges,<br>Agent Profiles</div>
+                                <div class="cs-journey-cell">Secure Connect,<br>Site Visits</div>
+                                <div class="cs-journey-cell">Deal Closure,<br>Verified Reviews</div>
+                            </div>
+                            <div class="cs-journey-row">
+                                <div class="cs-journey-cell label-col">ACTIONS</div>
+                                <div class="cs-journey-cell">Identifies need for verified property/service</div>
+                                <div class="cs-journey-cell">Compares verified listings with visual guidance</div>
+                                <div class="cs-journey-cell">Validates broker credentials and authenticity</div>
+                                <div class="cs-journey-cell">Connects securely with sellers/brokers</div>
+                                <div class="cs-journey-cell">Closes deal with confidence; leaves feedback</div>
+                            </div>
+                            <div class="cs-journey-row">
+                                <div class="cs-journey-cell label-col">EMOTIONS</div>
+                                <div class="cs-journey-cell"><div class="cs-journey-emotion">😫 Fatigued</div></div>
+                                <div class="cs-journey-cell"><div class="cs-journey-emotion">🧐 Hopeful</div></div>
+                                <div class="cs-journey-cell"><div class="cs-journey-emotion">⚖️ Confident</div></div>
+                                <div class="cs-journey-cell"><div class="cs-journey-emotion">✅ Relieved</div></div>
+                                <div class="cs-journey-cell"><div class="cs-journey-emotion">🤝 Empowered</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle" style="margin-top: 4rem;">Key Insights</h3>
+                    <style>
+                        /* HARD FIX FOR INSIGHT CARDS LIGHT MODE */
+                    </style>
+                    <div class="cs-insight-grid reveal">
+                        <div class="cs-insight-card">
+                            <h4>Verification Anxiety</h4>
+                            <p>Users are highly hesitant to engage with brokers or high-value listings without explicit verification badges or 360° visual proof.</p>
+                        </div>
+                        <div class="cs-insight-card">
+                            <h4>Listing Fragmentation</h4>
+                            <p>Over 80% of regional users struggle with switching between disparate apps for property, vehicles, and essential home services.</p>
+                        </div>
+                        <div class="cs-insight-card">
+                            <h4>Discovery Friction</h4>
+                            <p>The manual effort required to validate agents in Jaipur and Dubai is the primary driver of platform abandonment and churn.</p>
+                        </div>
+                    </div>
+
+                    <div class="cs-problem reveal" style="margin-top: 4rem; margin-bottom: 2rem;">
+                        <span
+                            style="color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 1.5rem;">Core Challenge</span>
+                        <h3
+                            style="font-size: 2.2rem; line-height: 1.3; font-family: 'Playfair Display', serif; color: var(--accent);">
+                            How might we transform the fragmented classifieds landscape into a high-trust visual ecosystem that users rely on for high-value life transitions?</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. IDEATE -->
+            <section class="cs-section cs-accordion-section reveal">
+                <div class="cs-section-header">
+                    <div class="cs-section-marker">I</div>
+                    <h2 class="ds-heading-h2">Let's Ideate</h2>
+                    <p>Mapping out the strategic shift and exploring high-impact feature solutions.</p>
+                </div>
+                <div class="cs-section-content">
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Discover Ideas</h3>
+                    <style>
+                        /* HARD FIX FOR IDEATE SECTION LIGHT MODE */
+                    </style>
+                    <div class="cs-ideas-board reveal">
+                        <!-- FLEXIBILITY & CONTROL -->
+                        <div class="cs-idea-cluster">
+                            <div class="cs-idea-theme">Flexibility & Control</div>
+                            <div class="cs-idea-sticky">Instant 'Verified Request' button for property tours.</div>
+                            <div class="cs-idea-sticky">Customized search alerts for specific regional niches.</div>
+                        </div>
+                        <!-- TRUST & VERIFICATION -->
+                        <div class="cs-idea-cluster">
+                            <div class="cs-idea-theme">Trust & Verification</div>
+                            <div class="cs-idea-sticky">360° Video verification for all property listings.</div>
+                            <div class="cs-idea-sticky">Verified Agent Badges based on historical data.</div>
+                            <div class="cs-idea-sticky">Blockchain-backed digital property credentials.</div>
+                        </div>
+
+                        <!-- VISUAL DISCOVERY -->
+                        <div class="cs-idea-cluster">
+                            <div class="cs-idea-theme">Visual Discovery</div>
+                            <div class="cs-idea-sticky">Visual-first filter UI for rapid neighborhood comparison.</div>
+                            <div class="cs-idea-sticky">Integrated map-view with proximity service tagging.</div>
+                            <div class="cs-idea-sticky">High-res, standardized property galleries.</div>
+                        </div>
+
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Solution Prioritization Matrix</h3>
+                    <style>
+                        /* HARD FIX FOR MATRIX LIGHT MODE */
+                    </style>
+                    <div class="cs-matrix-container reveal">
+                        <!-- Axis Labels -->
+                        <div class="cs-matrix-label" style="top: -2rem; left: 50%; transform: translateX(-50%);">High
+                            Impact</div>
+                        <div class="cs-matrix-label" style="bottom: -2rem; left: 50%; transform: translateX(-50%);">Low
+                            Impact</div>
+                        <div class="cs-matrix-label"
+                            style="left: -3rem; top: 50%; transform: translateY(-50%) rotate(-90deg);">High Effort</div>
+                        <div class="cs-matrix-label"
+                            style="right: -3rem; top: 50%; transform: translateY(-50%) rotate(90deg);">Low Effort</div>
+
+                        <div class="cs-matrix-grid">
+                            <div class="cs-matrix-axis cs-matrix-y-axis"></div>
+                            <div class="cs-matrix-axis cs-matrix-x-axis"></div>
+
+                            <!-- Top Left: High Impact / High Effort -->
+                            <div class="cs-matrix-bubble" style="top: 15%; left: 10%;">Real-time Verification Engine</div>
+                            <div class="cs-matrix-bubble" style="top: 15%; left: 25%;">Digital Contract Signing</div>
+
+                            <!-- Top Right: High Impact / Low Effort -->
+                            <div class="cs-matrix-bubble" style="top: 15%; right: 25%;">Verified Agent Badges</div>
+                            <div class="cs-matrix-bubble" style="top: 15%; right: 5%;">Visual Filter UI</div>
+                            <div class="cs-matrix-bubble" style="top: 30%; right: 20%;">Direct WhatsApp Connect</div>
+
+                            <!-- Bottom Left: Low Impact / High Effort -->
+                            <div class="cs-matrix-bubble" style="bottom: 20%; left: 10%;">Voice Search</div>
+
+                            <!-- Bottom Right: Low Impact / Low Effort -->
+                            <div class="cs-matrix-bubble" style="bottom: 20%; right: 20%;">Dark Mode</div>
+                            <div class="cs-matrix-bubble" style="bottom: 20%; right: 5%;">Saved Search</div>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Final Ideas</h3>
+                    <style>
+                        /* HARD FIX FOR FINAL IDEAS LIGHT MODE */
+                    </style>
+                    <div class="cs-final-ideas-grid reveal">
+                        <div class="cs-final-idea-card">
+                            <span class="cs-final-idea-num">IDEA 01</span>
+                            <h4>Visual Verification Shield</h4>
+                            <p>An industry-first 360° visual audit system for property listings, ensuring the digital preview matches the physical reality with 100% honesty.</p>
+                        </div>
+                        <div class="cs-final-idea-card">
+                            <span class="cs-final-idea-num">IDEA 02</span>
+                            <h4>The Trust-Score Engine</h4>
+                            <p>A proprietary credibility algorithm that rates agents and sellers based on verified history, user reviews, and regional compliance standards.</p>
+                        </div>
+                        <div class="cs-final-idea-card">
+                            <span class="cs-final-idea-num">IDEA 03</span>
+                            <h4>Unified Service Connect</h4>
+                            <p>A seamless bridge between high-value property discovery and the secondary services (moving, cleaning, legal) needed to finalize a life transition.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">How Might We?</h3>
+                    <div class="cs-grid-3 carousel-mobile">
+                        <div class="ds-card">
+                            <p style="font-weight: 700; font-size: 1.1rem; font-family: 'Playfair Display', serif;">HMW build absolute trust in digital property listings without physical visits?</p>
+                        </div>
+                        <div class="ds-card">
+                            <p style="font-weight: 700; font-size: 1.1rem; font-family: 'Playfair Display', serif;">HMW unify disparate local service categories into a single, cohesive user experience?</p>
+                        </div>
+                        <div class="ds-card">
+                            <p style="font-weight: 700; font-size: 1.1rem; font-family: 'Playfair Display', serif;">HMW scale agent verification while maintaining regional market agility?</p>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle">The Strategic Pivot</h3>
+                    <div class="ds-card cs-pivot-container" style="background: var(--accent-light); border-color: var(--accent-30);">
+                        <div class="cs-grid-2" style="margin-bottom: 0;">
+                            <div class="cs-pivot-box box-from">
+                                <h4
+                                    style="color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem;">
+                                    From Fragmented Listings</h4>
+                                <p style="font-size: 1.2rem; font-weight: 600;">Untrustworthy, cluttered platforms that force users into high-anxiety decision loops.</p>
+                            </div>
+                            <div class="cs-pivot-box box-to">
+                                <h4
+                                    style="color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem;">
+                                    To Unified Discovery</h4>
+                                <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-primary);">A high-trust visual ecosystem that simplifies high-value life transitions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>
+
+            <!-- 4. DESIGN -->
+            <section class="cs-section cs-accordion-section reveal">
+                <div class="cs-section-header">
+                    <div class="cs-section-marker">S</div>
+                    <h2 class="ds-heading-h2">Let's Design</h2>
+                    <p>Translating strategy into interface architecture and high-fidelity product surfaces.</p>
+                </div>
+                <div class="cs-section-content">
+                    <h3 class="ds-heading-h3 cs-section-subtitle">Information Architecture</h3>
+                    <div class="cs-arch-container reveal">
+                        <div class="cs-flow-viewport">
+                            <svg width="1000" height="400" viewBox="0 0 1000 400" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                                <!-- Connector Lines -->
+                                <path d="M120 200 L180 200" stroke="var(--border-medium)" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <path d="M300 200 L350 200" stroke="var(--border-medium)" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <path d="M410 140 L410 100 L550 100" stroke="var(--border-medium)"
+                                    stroke-width="2" marker-end="url(#arrow)" />
+                                <path d="M410 260 L410 300 L550 300" stroke="var(--border-medium)"
+                                    stroke-width="2" marker-end="url(#arrow)" />
+                                <path d="M670 100 L720 100" stroke="var(--border-medium)" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <path d="M670 300 L780 300 L780 160 L720 160" stroke="var(--border-medium)"
+                                    stroke-width="2" marker-end="url(#arrow)" />
+                                <path d="M840 100 L880 100" stroke="var(--border-medium)" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <path d="M780 40 L780 20 L930 20 L930 60" stroke="var(--border-medium)"
+                                    stroke-width="2" marker-end="url(#arrow)" />
+                                <path d="M780 160 L780 230 L880 230" stroke="var(--border-medium)"
+                                    stroke-width="2" marker-end="url(#arrow)" />
+
+                                <defs>
+                                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5"
+                                        orient="auto">
+                                        <path d="M0 0 L10 5 L0 10 Z" fill="var(--border-medium)" />
+                                    </marker>
+                                </defs>
+
+                                <!-- Nodes -->
+                                <foreignObject x="20" y="160" width="100" height="80">
+                                    <div class="cs-flow-node gold"
+                                        style="min-width: 100px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Browse</div>
+                                </foreignObject>
+
+                                <foreignObject x="180" y="160" width="120" height="80">
+                                    <div class="cs-flow-node"
+                                        style="min-width: 120px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Request Verification</div>
+                                </foreignObject>
+
+                                <foreignObject x="350" y="140" width="120" height="120">
+                                    <div class="cs-flow-decision"><span>Trust Established?</span></div>
+                                </foreignObject>
+
+                                <foreignObject x="550" y="60" width="120" height="80">
+                                    <div class="cs-flow-node"
+                                        style="min-width: 120px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Request Site Visit</div>
+                                </foreignObject>
+
+                                <foreignObject x="550" y="260" width="120" height="80">
+                                    <div class="cs-flow-node"
+                                        style="min-width: 120px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Auto-Verify Agent</div>
+                                </foreignObject>
+
+                                <foreignObject x="720" y="40" width="120" height="120">
+                                    <div class="cs-flow-decision"><span>Secure Deal?</span></div>
+                                </foreignObject>
+
+                                <foreignObject x="880" y="60" width="100" height="80">
+                                    <div class="cs-flow-node"
+                                        style="min-width: 100px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Active Transaction</div>
+                                </foreignObject>
+
+                                <foreignObject x="880" y="190" width="100" height="80">
+                                    <div class="cs-flow-node"
+                                        style="min-width: 100px; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                        Trial Order</div>
+                                </foreignObject>
+
+                                <!-- Decision Labels -->
+                                 <text x="410" y="130" fill="#fff" font-size="14"
+                                     font-weight="900" letter-spacing="0.1em" text-anchor="middle">YES</text>
+                                 <text x="410" y="285" fill="#fff" font-size="14"
+                                     font-weight="900" letter-spacing="0.1em" text-anchor="middle">NO</text>
+                                 <text x="855" y="115" fill="#fff" font-size="14"
+                                     font-weight="900" letter-spacing="0.1em">NO</text>
+                                 <text x="810" y="195" fill="#fff" font-size="14"
+                                     font-weight="900" letter-spacing="0.1em">YES</text>
+                            </svg>
+                        </div>
+                        <div class="cs-arch-footer">
+                            <span
+                                style="font-size: 0.7rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 1rem;">Key
+                                User Flow</span>
+                            <h4>Unified Listing Verification</h4>
+                            <p>A frictionless flow allowing users to discover verified properties, audit listing authenticity through 360° views, and connect securely with top-rated local agents.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle" style="margin-top: 8rem; margin-bottom: 4rem;">High-Fi - Website</h3>
+                    <div class="cs-hifi-slider-wrapper" style="width: 100%; position: relative; margin: 0px 0 6rem 0;">
+                        <div class="cs-hifi-container hifi-main-slider" id="hifi-slider-web"
+                            style="width: 100%; border-radius: 32px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; aspect-ratio: 16/9; padding: 32px 4rem 180px 4rem; box-sizing: border-box; background: var(--bg-card); backdrop-filter: blur(10px);">
+                            
+                            <div class="hifi-slide active" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 1; transition: opacity 0.8s ease-in-out; display: block; overflow-y: auto; padding: 2rem 2rem 10rem 2rem; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none;">
+                                <style>.hifi-slide::-webkit-scrollbar { display: none; }</style>
+                                <img src="image/High-Fidelity-Interface/Web/Index.png" alt="RoundMart Web Dashboard" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: var(--shadow-lg);" />
+                            </div>
+                            <div class="hifi-slide" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease-in-out; display: block; overflow-y: auto; visibility: hidden; padding: 2rem 2rem 10rem 2rem; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none;">
+                                <img src="image/High-Fidelity-Interface/Web/08e50b33932b4899b8bbc5f3ac083241.png" alt="RoundMart Web Listings" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: var(--shadow-lg);" />
+                            </div>
+                            <div class="hifi-slide" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease-in-out; display: block; overflow-y: auto; visibility: hidden; padding: 2rem 2rem 10rem 2rem; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none;">
+                                <img src="image/High-Fidelity-Interface/Web/147ba1aff32a499fa6d9c177269b6edd.png" alt="RoundMart Web Search" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: var(--shadow-lg);" />
+                            </div>
+                            <div class="hifi-slide" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease-in-out; display: block; overflow-y: auto; visibility: hidden; padding: 2rem 2rem 10rem 2rem; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none;">
+                                <img src="image/High-Fidelity-Interface/Web/22fed8aa6ffb4f008e1ca09f4fd05a1e.png" alt="RoundMart Web Profile" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: var(--shadow-lg);" />
+                            </div>
+                        </div>
+
+                        <!-- Integrated Slider Controls & Actions -->
+                        <div class="hifi-controls-wrapper" style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 11; width: 100%;">
+                            <div class="hifi-quick-actions" style="display: flex; justify-content: center; gap: 15px;">
+                                <a href="https://marvelapp.com/prototype/54bi073/screen/59953569" target="_blank" class="hifi-action-btn" style="display: flex; align-items: center; gap: 8px; background: var(--accent); color: #1A1A1A; padding: 12px 24px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    Live Web Interface
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="ds-heading-h3 cs-section-subtitle" style="margin-bottom: 2rem;">High-Fi - Mobile</h3>
+                    <div class="cs-hifi-slider-wrapper" style="width: 100%; position: relative; margin: 0px 0 6rem 0;">
+                        <div class="cs-hifi-container hifi-horizontal-slider" id="hifi-slider-mobile"
+                            style="width: 100%; border-radius: 32px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); position: relative; padding: 4rem 2rem 100px 2rem; box-sizing: border-box; display: flex; gap: 2rem; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; background: var(--bg-card); backdrop-filter: blur(10px);">
+                            
+                            <div class="hifi-mobile-slide" style="flex: 0 0 auto; width: 280px; height: 580px; scroll-snap-align: center; overflow: hidden; border-radius: 36px; border: 8px solid #1a1a1a; background: #000; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;">
+                                <div style="width: 100%; height: 100%; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
+                                    <style>.hifi-mobile-slide div::-webkit-scrollbar { display: none; }</style>
+                                    <img src="image/High-Fidelity-Interface/Mobile/02e240cba53a42ea91245e32b87fb3b0.png" alt="Mobile Dashboard" style="width: 100%; height: auto; display: block;" />
+                                </div>
+                            </div>
+                            <div class="hifi-mobile-slide" style="flex: 0 0 auto; width: 280px; height: 580px; scroll-snap-align: center; overflow: hidden; border-radius: 36px; border: 8px solid #1a1a1a; background: #000; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;">
+                                <div style="width: 100%; height: 100%; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 100px; box-sizing: border-box;">
+                                    <img src="image/High-Fidelity-Interface/Mobile/0456fc962682456d8b1ace58cd1b5ea1.png" alt="Mobile Verification" style="width: 100%; height: auto; display: block;" />
+                                </div>
+                            </div>
+                            <div class="hifi-mobile-slide" style="flex: 0 0 auto; width: 280px; height: 580px; scroll-snap-align: center; overflow: hidden; border-radius: 36px; border: 8px solid #1a1a1a; background: #000; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;">
+                                <div style="width: 100%; height: 100%; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 100px; box-sizing: border-box;">
+                                    <img src="image/High-Fidelity-Interface/Mobile/06a293f72235406b9d23ab68be4aad5b.png" alt="Mobile Discovery" style="width: 100%; height: auto; display: block;" />
+                                </div>
+                            </div>
+                            <div class="hifi-mobile-slide" style="flex: 0 0 auto; width: 280px; height: 580px; scroll-snap-align: center; overflow: hidden; border-radius: 36px; border: 8px solid #1a1a1a; background: #000; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;">
+                                <div style="width: 100%; height: 100%; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 100px; box-sizing: border-box;">
+                                    <img src="image/High-Fidelity-Interface/Mobile/078afb6131b3437f8d8827bf9c066769.png" alt="Mobile Map" style="width: 100%; height: auto; display: block;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Integrated Slider Controls & Actions -->
+                        <div class="hifi-controls-wrapper" style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 11; width: 100%;">
+                            <div class="hifi-quick-actions" style="display: flex; justify-content: center; gap: 15px;">
+                                <a href="https://marvelapp.com/prototype/9d2bfc8/screen/62770022" target="_blank" class="hifi-action-btn" style="display: flex; align-items: center; gap: 8px; background: var(--accent); color: #1A1A1A; padding: 12px 24px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                                    Mobile App Interface
+                                </a>
+                            </div>
+                        </div>
+
+                        <style>
+                            #hifi-slider-mobile::-webkit-scrollbar { display: none; }
+                            #hifi-slider-mobile { -ms-overflow-style: none; scrollbar-width: none; }
+                        </style>
+                    </div>
+
+                    <div class="cs-grid-3 carousel-mobile cs-hifi-features" style="margin-top: 3rem;">
+                        <div class="ds-card">
+                            <h4 style="color: var(--accent); font-size: 0.9rem; text-transform: uppercase;">Verified Discovery</h4>
+                            <p>360° immersive property views and agent credibility scores to build absolute trust before the first visit.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--accent); font-size: 0.9rem; text-transform: uppercase;">Unified Bridge</h4>
+                            <p>A seamless integration between high-value property discovery and the essential local services needed for relocation.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 style="color: var(--accent); font-size: 0.9rem; text-transform: uppercase;">Regional Focus</h4>
+                            <p>Customized interfaces for Jaipur, Kerala, and Dubai markets that reflect local cultural and transaction patterns.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+            <!-- 6. FINAL REFLECTIONS -->
+            <section class="cs-section cs-accordion-section reveal">
+                <div class="cs-section-header">
+                    <div class="cs-section-marker">R</div>
+                    <h2 class="ds-heading-h2">Final Reflections</h2>
+                    <p>Analyzing the design maturity, strategic impact, and key lessons learned.</p>
+                </div>
+                <div class="cs-section-content">
+                    <!-- Delivery Impact Metrics -->
+                    <div class="cs-grid-3" style="margin-bottom: 4rem;">
+                        <div class="cs-metric-card"
+                            style="display: flex; align-items: center; justify-content: space-between; padding: 2.5rem; background: var(--bg-card); border-radius: 18px; border: 1px solid var(--border-medium);">
+                            <div style="width: 80px;">
+                                <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%;">
+                                    <path d="M10 50 L30 40 L50 45 L70 20 L90 10" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M80 10 H90 V20" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="cs-metric-val" style="font-size: 2.5rem; color: var(--accent); font-weight: 800;">+92%</div>
+                                <div class="cs-metric-label" style="color: var(--text-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Lead Quality</div>
+                            </div>
+                        </div>
+
+                        <div class="cs-metric-card"
+                            style="display: flex; align-items: center; justify-content: space-between; padding: 2.5rem; background: var(--bg-card); border-radius: 18px; border: 1px solid var(--border-medium);">
+                            <div style="width: 80px;">
+                                <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%;">
+                                    <path d="M10 10 L40 15 L70 40 L90 50" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="90" cy="50" r="4" fill="var(--accent)" />
+                                </svg>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="cs-metric-val" style="font-size: 2.5rem; color: var(--accent); font-weight: 800;">-65%</div>
+                                <div class="cs-metric-label" style="color: var(--text-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Discovery Friction</div>
+                            </div>
+                        </div>
+
+                        <div class="cs-metric-card"
+                            style="display: flex; align-items: center; justify-content: space-between; padding: 2.5rem; background: var(--bg-card); border-radius: 18px; border: 1px solid var(--border-medium);">
+                            <div style="width: 80px;">
+                                <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%;">
+                                    <path d="M10 50 L40 45 L60 25 L90 15" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="90" cy="15" r="4" fill="var(--accent)" />
+                                </svg>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="cs-metric-val" style="font-size: 2.5rem; color: var(--accent); font-weight: 800;">75%</div>
+                                <div class="cs-metric-label" style="color: var(--text-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Trust Index</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Takeaways -->
+                    <div class="cs-grid-3">
+                        <div class="ds-card">
+                            <h4 class="cs-affinity-theme" style="text-align: left; margin-bottom: 1rem;">The Trust Layer</h4>
+                            <p style="margin-bottom: 1rem;">Trust isn't just about badges; it's about visual honesty and verified agent history in high-stakes markets.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 class="cs-affinity-theme" style="text-align: left; margin-bottom: 1rem;">Unified Scope</h4>
+                            <p style="margin-bottom: 1rem;">Consolidating properties and services reduces the anxiety inherent in high-value life transitions.</p>
+                        </div>
+                        <div class="ds-card">
+                            <h4 class="cs-affinity-theme" style="text-align: left; margin-bottom: 1rem;">Scalable Friction</h4>
+                            <p style="margin-bottom: 1rem;">Scaling a verification engine without slowing down regional market momentum was the core design hurdle.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- NEXT CASE STUDY -->
+            <section class="reveal" style="padding-top: 6rem; margin-bottom: 4rem; border-top: 1px solid var(--border-medium);">
+                <div style="margin-bottom: 3rem;">
+                    <h2 class="ds-heading-h2" style="color: var(--text-primary); margin-bottom: 0.5rem;">Next Case Study</h2>
+                    <p style="color: var(--text-secondary);">Explore other research and strategy projects.</p>
+                </div>
+
+                <div>
+                    <!-- Case Study: Careline HRMS -->
+                    <div class="case-card-new reveal" style="background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: 24px; display: flex; overflow: hidden; position: relative;">
+                        <div class="case-content" style="padding: 3rem; flex: 1;">
+                            <span class="case-tag" style="color: var(--accent); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">ENTERPRISE HRMS</span>
+                            <h3 class="ds-heading-h3 case-title" style="margin: 1.5rem 0;">Careline HRMS - Employee Experience</h3>
+                            <p class="ds-body case-desc" style="color: var(--text-secondary); margin-bottom: 2.5rem;">A comprehensive HRMS transformation focusing on intuitive leave management, performance tracking, and streamlined employee workflows.</p>
+                            <div class="case-actions">
+                                <a href="../HRMS/case_study.html" class="ds-btn ds-btn-primary">View Case Study</a>
+                            </div>
+                        </div>
+                        <div class="case-visuals" style="flex: 1; position: relative; background: rgba(0,0,0,0.2);">
+                            <img src="../HRMS/image/hero-image/hrms_hero_main.png" alt="Careline HRMS Mockup" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="cs-footer">
+        <div class="cs-footer-container">
+            <p>© 2026 Nitin Kr. • UX Case Study Portfolio</p>
+        </div>
+    </footer>
+
+    <!-- FULL SCREEN MENU OVERLAY -->
+    <div class="menu-overlay" id="menu-overlay">
+        <div class="menu-nav">
+            <a href="../index.html#portfolio" class="menu-link">PORTFOLIO</a>
+            <a href="../index.html#lab" class="menu-link">THE LAB</a>
+            <a href="../index.html#about" class="menu-link">ABOUT</a>
+            <a href="../index.html#contact" class="menu-link">CONTACT</a>
+        </div>
+        <div class="mobile-menu-actions">
+            <a href="https://www.linkedin.com/in/nitin-kr-205341b/" class="ds-btn ds-btn-primary" target="_blank">LinkedIn</a>
+            <a href="https://drive.google.com/file/d/1QZ3t9m-rhyUR12MwxylxgyfCBWVkjNqZ/view?usp=sharing" class="ds-btn ds-btn-secondary" target="_blank">Resume</a>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // --- High-Fidelity Theme Toggle (Independent) ---
+        function handleThemeToggle() {
+            const html = document.documentElement;
+            const body = document.body;
+            const toggleBtn = document.getElementById('cs-theme-toggle');
+            
+            if (!toggleBtn) return;
+
+            const isDark = html.classList.toggle('dark-mode');
+            body.classList.toggle('dark-mode');
+            
+            const theme = isDark ? 'dark' : 'light';
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Update Icons
+            const moon = toggleBtn.querySelector('.moon-icon');
+            const sun = toggleBtn.querySelector('.sun-icon');
+            if (moon && sun) {
+                moon.style.display = isDark ? 'none' : 'block';
+                sun.style.display = isDark ? 'block' : 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('cs-theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', handleThemeToggle);
+                
+                // Initial Icon Sync
+                const isDark = document.documentElement.classList.contains('dark-mode');
+                const moon = toggleBtn.querySelector('.moon-icon');
+                const sun = toggleBtn.querySelector('.sun-icon');
+                if (moon && sun) {
+                    moon.style.display = isDark ? 'none' : 'block';
+                    sun.style.display = isDark ? 'block' : 'none';
+                }
+            }
+
+            // High-Fidelity Accordion Logic (Exclusive Toggle)
+            const sections = document.querySelectorAll('.cs-section');
+            sections.forEach((section) => {
+                const header = section.querySelector('.cs-section-header');
+                if (!header) return;
+
+                header.addEventListener('click', (e) => {
+                    // Prevent accidental triggers if clicking links inside
+                    if (e.target.tagName === 'A' || e.target.closest('a')) return;
+
+                    const isExpanded = section.classList.contains('cs-expanded');
+                    
+                    // Close all sections first for exclusive behavior
+                    sections.forEach(s => s.classList.remove('cs-expanded'));
+                    
+                    // If it wasn't expanded, expand it now
+                    if (!isExpanded) {
+                        section.classList.add('cs-expanded');
+                    }
+                });
+            });
+
+            // Ensure first section is expanded by default
+            if (sections.length > 0) {
+                sections[0].classList.add('cs-expanded');
+            }
+
+            // Reveal on Scroll
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            // --- High-Fidelity Vertical Slider Engine ---
+            const initHifiSlider = (id) => {
+                const container = document.getElementById(id);
+                if (!container) return;
+                
+                const slides = container.querySelectorAll('.hifi-slide');
+                if (slides.length === 0) return;
+
+                let currentIdx = 0;
+                let sliderInterval;
+
+                const updateHifiSlider = (index) => {
+                    slides.forEach((slide, i) => {
+                        if (i === index) {
+                            slide.style.visibility = 'visible';
+                            slide.style.opacity = '1';
+                            slide.classList.add('active');
+                        } else {
+                            slide.style.opacity = '0';
+                            slide.classList.remove('active');
+                            setTimeout(() => {
+                                if (!slide.classList.contains('active')) {
+                                    slide.style.visibility = 'hidden';
+                                }
+                            }, 800);
+                        }
+                    });
+                    currentIdx = index;
+                };
+
+                const startAutoSlide = () => {
+                    sliderInterval = setInterval(() => {
+                        let next = (currentIdx + 1) % slides.length;
+                        updateHifiSlider(next);
+                    }, 4000);
+                };
+
+                startAutoSlide();
+            };
+
+            // --- Mobile Horizontal Auto-Slider Engine ---
+            const initMobileSlider = () => {
+                const container = document.getElementById('hifi-slider-mobile');
+                if (!container) return;
+                
+                const slides = container.querySelectorAll('.hifi-mobile-slide');
+                if (slides.length === 0) return;
+
+                let currentIdx = 0;
+                let autoSlideInterval;
+
+                const startAutoSlide = () => {
+                    autoSlideInterval = setInterval(() => {
+                        currentIdx = (currentIdx + 1) % slides.length;
+                        const itemWidth = slides[0].offsetWidth + 32; // width + gap
+                        container.scrollTo({
+                            left: currentIdx * itemWidth,
+                            behavior: 'smooth'
+                        });
+                    }, 4000);
+                };
+
+                // Pause on user interaction
+                container.addEventListener('touchstart', () => clearInterval(autoSlideInterval));
+                container.addEventListener('mousedown', () => clearInterval(autoSlideInterval));
+
+                startAutoSlide();
+            };
+
+            initHifiSlider('hifi-slider-web');
+            initMobileSlider();
+
+
+        });
+    </script>
+</body>
+
+</html>

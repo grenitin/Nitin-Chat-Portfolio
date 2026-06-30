@@ -1202,10 +1202,35 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
 
     // Start with the initial prompt from Step 1
     setTimeout(() => {
-        const welcomeText = `Hey there! I'm Nitin's AI Buddy.<div class="mobile-only-break welcome-line-break"></div> <span class="mobile-sub-text">Let's explore his experience and skills.</span><div class="welcome-gap"></div><span class="mobile-tiny-text"><span class="mobile-unbold">**To personalize our chat,**</span><div class="mobile-only-break welcome-line-break"></div> **may I know who you are?**</span>`;
+        const urlParams = new URLSearchParams(window.location.search);
+        let visitorName = urlParams.get('visitor');
+        // also support 'name' parameter just in case
+        if (!visitorName) visitorName = urlParams.get('name');
         
-        appendMessage('agent', welcomeText, 'text', true);
-        showOptions(["Recruiter", "Hiring Manager", "Founder", "Client", "Other"]);
+        let welcomeText;
+        if (visitorName) {
+            // Capitalize first letter of visitor name
+            visitorName = visitorName.charAt(0).toUpperCase() + visitorName.slice(1);
+            welcomeText = `Hi ${visitorName}! I'm Nitin's AI Buddy.<div class="mobile-only-break welcome-line-break"></div> <span class="mobile-sub-text">Thanks for visiting from LinkedIn! Let's explore his experience and skills.</span><div class="welcome-gap"></div><span class="mobile-tiny-text">How can I help you today?</span>`;
+            
+            // Add a silent context message to history so the AI knows who it is talking to
+            conversationHistory.push({
+                role: "user",
+                parts: [{ text: `[SYSTEM CONTEXT: The user visiting the portfolio is named ${visitorName}. Address them by name and be welcoming.]` }]
+            });
+            conversationHistory.push({
+                role: "model",
+                parts: [{ text: `Hi ${visitorName}! How can I help you today?` }]
+            });
+            
+            appendMessage('agent', welcomeText, 'text', true);
+            showOptions(["View Resume", "Case Studies", "Core Skills", "Work Experience", "Other"]);
+        } else {
+            welcomeText = `Hey there! I'm Nitin's AI Buddy.<div class="mobile-only-break welcome-line-break"></div> <span class="mobile-sub-text">Let's explore his experience and skills.</span><div class="welcome-gap"></div><span class="mobile-tiny-text"><span class="mobile-unbold">**To personalize our chat,**</span><div class="mobile-only-break welcome-line-break"></div> **may I know who you are?**</span>`;
+            
+            appendMessage('agent', welcomeText, 'text', true);
+            showOptions(["Recruiter", "Hiring Manager", "Founder", "Client", "Other"]);
+        }
         
         // Speak the welcome message automatically on load
         speakText(welcomeText);

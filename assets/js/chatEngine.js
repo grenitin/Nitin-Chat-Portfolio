@@ -959,11 +959,11 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
         if (lowerText === 'intro' || lowerText === 'tell me about yourself' || lowerText === 'who are you' || lowerText === 'summary' || lowerText === 'tell me about nitin') {
             bypassResponse = `Nitin is a **Design Manager** based out of **Jaipur**.\n\n**Professional Journey:** He has worked with top companies including **PwC India** (current Design Manager), **Technogen** (VP Design), **mavQ** (Principal Designer), and **CarDekho** (Creative Head), taking on core responsibilities in UX architecture, AI-driven product strategy, and leading high-performing teams.\n\n**Key Projects:** He has led major initiatives such as Enterprise HRMS transformations, Healthcare Discovery platforms, an AI Document Scanner, and B2B E-commerce redesigns.\n\n**Education:** He holds a BSc in Multimedia & Animation, a Google UX Certificate, and is currently specializing in Agentic AI & GenAI through an advanced program at IIT Madras.\n\n**Availability:** Nitin is actively looking for better opportunities and is open to relocating to **Bangalore, Hyderabad, Pune, Noida, Gurugram**, as well as working **Remote**.`;
         } else if (lowerText === 'recruiter') {
-            bypassResponse = `Awesome! Since you're a recruiter, you're probably looking for Nitin's core skills, experience, and maybe his resume. Here are a few quick options to help you explore his profile!`;
-            bypassOptions = ["Intro", "Professional Journey", "View Resume", "Show Case Studies"];
+            bypassResponse = `Awesome! Since you're a recruiter, you're probably looking for Nitin's core skills and experience. If you have a Job Description (JD) handy, feel free to paste it or upload it right here! That way, I can directly connect his background to what you're looking for.`;
+            bypassOptions = ["Professional Journey", "View Resume", "Show Case Studies"];
         } else if (lowerText === 'hiring manager') {
-            bypassResponse = `Great to meet you! As a Hiring Manager, you might be interested in Nitin's leadership experience, his strategic impact, and his actual case studies. Let me know what you'd like to dive into first.`;
-            bypassOptions = ["Professional Journey", "Show Case Studies", "The AI Lab", "Education"];
+            bypassResponse = `Great to meet you! As a Hiring Manager, you might be interested in Nitin's leadership and strategic impact. If you have a Job Description (JD), feel free to paste or upload it here so I can tailor the experience for you!`;
+            bypassOptions = ["Professional Journey", "Show Case Studies", "The AI Lab"];
         } else if (lowerText === 'founder') {
             bypassResponse = `Fantastic! Founders usually love Nitin's ability to drive zero-to-one product design and his strategic product thinking. What would you like to explore first?`;
             bypassOptions = ["Intro", "Show Case Studies", "The AI Lab", "View Resume"];
@@ -973,14 +973,27 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
         } else if (lowerText === 'skip') {
             // Contextual Skip Dialog in 0 seconds
             const lastModelMsg = conversationHistory.slice().reverse().find(msg => msg.role === 'model')?.parts[0]?.text || '';
-            if (lastModelMsg.includes("may I know who you are") || lastModelMsg.includes("who you are")) {
-                bypassResponse = "That's completely fine! We can skip the introductions. I'm here to help you seamlessly discover Nitin's strategic design work. What would you like to explore first?";
+            let contextName = "this part";
+            
+            if (lastModelMsg.includes("who you are") || lastModelMsg.includes("personalize our chat")) {
+                contextName = "the introduction";
                 bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
-            } else if (lastModelMsg.includes("Job Description") || lastModelMsg.includes("JD handy")) {
-                bypassResponse = "No worries! We can skip the Job Description for now. There are many other ways to evaluate Nitin's fit for your team. What would you like to dive into instead?";
+            } else if (lastModelMsg.includes("Job Description") || lastModelMsg.includes("JD")) {
+                contextName = "sharing a JD";
                 bypassOptions = ["Professional Journey", "Show Case Studies", "The AI Lab", "Education"];
-            } else {
-                bypassResponse = "Absolutely! We can skip this part. Please feel free to choose a topic below to explore Nitin's work, or ask me any specific questions!";
+            } else if (lastModelMsg.includes("Case Studies") || lastModelMsg.includes("case study") || lastModelMsg.includes("Case study")) {
+                contextName = "the case studies";
+            } else if (lastModelMsg.includes("journey") || lastModelMsg.includes("experience")) {
+                contextName = "the professional journey";
+            } else if (lastModelMsg.includes("Intro") || lastModelMsg.includes("Design Manager")) {
+                contextName = "the intro";
+            } else if (lastModelMsg.includes("resume") || lastModelMsg.includes("CV")) {
+                contextName = "the resume";
+            }
+
+            bypassResponse = `Oh, since you have skipped ${contextName}, what other things would you like to explore from Nitin's portfolio?`;
+            
+            if (!bypassOptions || bypassOptions.length === 0) {
                 bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
             }
         } else if (lowerText === 'other' || lowerText.includes('specific question') || lowerText.includes('explore freely')) {

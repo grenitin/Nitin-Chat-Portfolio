@@ -970,7 +970,20 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
         } else if (lowerText === 'client') {
             bypassResponse = `Welcome! If you're a potential client, you might want to see the real-world impact Nitin has delivered through his high-quality design solutions. Let's look at some of his work.`;
             bypassOptions = ["Show Case Studies", "The AI Lab", "My Website", "View Resume"];
-        } else if (lowerText === 'other' || lowerText === 'skip' || lowerText.includes('specific question') || lowerText.includes('explore freely')) {
+        } else if (lowerText === 'skip') {
+            // Contextual Skip Dialog in 0 seconds
+            const lastModelMsg = conversationHistory.slice().reverse().find(msg => msg.role === 'model')?.parts[0]?.text || '';
+            if (lastModelMsg.includes("may I know who you are") || lastModelMsg.includes("who you are")) {
+                bypassResponse = "That's completely fine! We can skip the introductions. I'm here to help you seamlessly discover Nitin's strategic design work. What would you like to explore first?";
+                bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
+            } else if (lastModelMsg.includes("Job Description") || lastModelMsg.includes("JD handy")) {
+                bypassResponse = "No worries! We can skip the Job Description for now. There are many other ways to evaluate Nitin's fit for your team. What would you like to dive into instead?";
+                bypassOptions = ["Professional Journey", "Show Case Studies", "The AI Lab", "Education"];
+            } else {
+                bypassResponse = "Absolutely! We can skip this part. Please feel free to choose a topic below to explore Nitin's work, or ask me any specific questions!";
+                bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
+            }
+        } else if (lowerText === 'other' || lowerText.includes('specific question') || lowerText.includes('explore freely')) {
             bypassResponse = `Absolutely! Everyone explores a portfolio differently. I'm here to help you seamlessly discover Nitin's strategic design work and leadership experience. Please feel free to ask me any specific questions you have, or choose a topic below to get started!`;
             bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
         } else if (lowerText === 'let\'s connect' || lowerText === 'contact' || lowerText === 'hire' || lowerText === 'lets connect') {

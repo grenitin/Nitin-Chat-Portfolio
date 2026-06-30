@@ -1212,17 +1212,52 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
     }, 500);
 
     // --- Resume Modal Logic ---
+    let pdfRendered = false;
     window.openResumeModal = function() {
         const modal = document.getElementById('resume-modal');
-        const iframe = document.getElementById('resume-iframe');
-        if (modal && iframe) {
-            // Lazy load the iframe source when opened to prevent blocking initial chat load
-            if (!iframe.src || iframe.src === 'about:blank' || iframe.src === window.location.href) {
-                iframe.src = iframe.getAttribute('data-src');
-            }
+        if (modal) {
             modal.style.display = 'flex';
             modal.style.opacity = 0;
             setTimeout(() => { modal.style.transition = 'opacity 0.2s'; modal.style.opacity = 1; }, 10);
+            
+            if (!pdfRendered && typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                
+                const loader = document.getElementById('pdf-loader');
+                const container = document.getElementById('pdf-container');
+                
+                pdfjsLib.getDocument('assets/Nitin_Kr_Resume.pdf').promise.then(function(pdfDoc) {
+                    if(loader) loader.style.display = 'none';
+                    const scale = window.innerWidth < 600 ? 1.0 : 1.5;
+                    
+                    // Render all 3 pages
+                    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                        pdfDoc.getPage(pageNum).then(function(page) {
+                            const viewport = page.getViewport({scale: scale});
+                            const canvas = document.createElement('canvas');
+                            canvas.style.display = 'block';
+                            canvas.style.margin = '0 auto 20px auto';
+                            canvas.style.maxWidth = '90%';
+                            canvas.style.height = 'auto';
+                            canvas.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+                            canvas.style.borderRadius = '4px';
+                            canvas.style.backgroundColor = 'white';
+                            
+                            const ctx = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            
+                            const renderContext = { canvasContext: ctx, viewport: viewport };
+                            page.render(renderContext);
+                            container.appendChild(canvas);
+                        });
+                    }
+                    pdfRendered = true;
+                }).catch(err => {
+                    console.error('Error loading PDF:', err);
+                    if(loader) loader.innerHTML = '<p style="color:#ff4d4f;">Failed to load PDF. Please download it directly.</p><a href="assets/Nitin_Kr_Resume.pdf" download class="ds-btn ds-btn-primary" style="margin-top:10px;text-decoration:none;">Download Resume</a>';
+                });
+            }
         }
     };
 

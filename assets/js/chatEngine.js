@@ -970,8 +970,8 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
         } else if (lowerText === 'client') {
             bypassResponse = `Welcome! If you're a potential client, you might want to see the real-world impact Nitin has delivered through his high-quality design solutions. Let's look at some of his work.`;
             bypassOptions = ["Show Case Studies", "The AI Lab", "My Website", "View Resume"];
-        } else if (lowerText === 'other' || lowerText === 'skip') {
-            bypassResponse = `Got it! I'm here to help you explore Nitin's portfolio. Feel free to choose any of the options below, or just type what you're looking for!`;
+        } else if (lowerText === 'other' || lowerText === 'skip' || lowerText.includes('specific question') || lowerText.includes('explore freely')) {
+            bypassResponse = `Absolutely! Everyone explores a portfolio differently. I'm here to help you seamlessly discover Nitin's strategic design work and leadership experience. Please feel free to ask me any specific questions you have, or choose a topic below to get started!`;
             bypassOptions = ["Intro", "Show Case Studies", "Professional Journey", "View Resume"];
         } else if (lowerText === 'let\'s connect' || lowerText === 'contact' || lowerText === 'hire' || lowerText === 'lets connect') {
             bypassResponse = `Awesome! Nitin would love to connect with you. You can reach him directly via:\n\n✉️ **Email:** [grenitin@gmail.com](mailto:grenitin@gmail.com)\n📞 **Phone:** [+91 9024930553](tel:+919024930553)\n💬 **WhatsApp:** [Message Nitin](https://wa.me/919024930553)\n\nHe is actively looking for new opportunities and is open to relocating!`;

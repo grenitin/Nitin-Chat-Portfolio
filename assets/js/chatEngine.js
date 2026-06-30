@@ -1213,12 +1213,17 @@ Latest Projects: ${portfolioData.extraProjects.map(p => `${p.title} (${p.role}):
 
     // --- Resume Modal Logic ---
     window.openResumeModal = function() {
-        const link = document.createElement('a');
-        link.href = 'assets/Nitin_Kr_Resume.pdf';
-        link.download = 'Nitin_Kr_Resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const modal = document.getElementById('resume-modal');
+        const iframe = document.getElementById('resume-iframe');
+        if (modal && iframe) {
+            // Lazy load the iframe source when opened to prevent blocking initial chat load
+            if (!iframe.src || iframe.src === 'about:blank' || iframe.src === window.location.href) {
+                iframe.src = iframe.getAttribute('data-src');
+            }
+            modal.style.display = 'flex';
+            modal.style.opacity = 0;
+            setTimeout(() => { modal.style.transition = 'opacity 0.2s'; modal.style.opacity = 1; }, 10);
+        }
     };
 
     window.openDribbbleModal = function() {

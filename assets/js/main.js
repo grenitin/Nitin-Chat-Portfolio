@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="modal-cta-bar">
                             <a href="https://www.linkedin.com/in/nitin-kr-205341b/" class="ds-btn ds-btn-secondary" target="_blank">My LinkedIn</a>
-                            <a href="https://drive.google.com/file/d/1QZ3t9m-rhyUR12MwxylxgyfCBWVkjNqZ/view?usp=sharing" class="ds-btn ds-btn-primary" target="_blank">My Resume</a>
+                            <a href="assets/Nitin_Kr_Resume.pdf" download class="ds-btn ds-btn-primary">My Resume</a>
                         </div>
                     `;
                     
